@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block head %}
+<title>Home</title>
+{% endblock %}
+
+{% block body %}
+{% for m in message%}
+<h1>{{  m  }}</h1>
+{% endfor %}
+{% endblock %}

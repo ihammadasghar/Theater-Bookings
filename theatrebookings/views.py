@@ -13,7 +13,7 @@ def home():
 
 
 @views.route('/', methods=['POST', 'GET'])
-def reservatioins():
+def reservations():
     pass
 
 

@@ -6,6 +6,9 @@ import time
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(150), unique=True)
+    name = db.Column(db.String(150))
+    reservations = db.relationship('Note')
 
     def __init__(self, name: str, email: str) -> None:
         self.name = name
@@ -14,24 +17,24 @@ class User(db.Model):
 
 class Seat(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-
+    position = db.Column(db.String(3))
+    vip = db.Column(db.Boolean)
+    reservation_id = db.Column(db.Integer, db.ForeignKey('reservation.id'))
+    
     def __init__(self, position: str, vip: bool, price: float) -> None:
         self.position = position
         self.vip = vip
         self.price = price
 
 
-class Reservation(db.Model):
+class Show(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-
-    def __init__(self, user: str, seat: Seat, date: datetime) -> None:
-        self.user = user
-        self.seat = seat
-        self.date = date
-
-
-class Shows(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100))
+    genre = db.Column(db.String(50))
+    duration = db.Column(db.Integer)
+    date = db.Column(db.DateTime(timezone=True))
+    description = db.Column(db.String(150))
+    reservations = db.relationship('Reservation')
 
     def __init__(self, name: str, date: datetime, genre: str, duration: int, description: str, time: time) -> None:
         self.name = name
@@ -39,4 +42,16 @@ class Shows(db.Model):
         self.duration = duration
         self.date = date
         self.description = description
-        self.time = time
+
+
+class Reservation(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    seat_id = db.Column(db.Integer, db.ForeignKey('seat.id'))
+    show_id = db.Column(db.Integer, db.ForeignKey('show.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    date = db.Column(db.DateTime(timezone=True))
+
+    def __init__(self, user_id: int, seat: Seat, show: Show) -> None:
+        self.user_id = user_id
+        self.seat = seat
+        self.show = show

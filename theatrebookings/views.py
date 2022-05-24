@@ -10,7 +10,8 @@ views = Blueprint('views', __name__)
 @views.route('/', methods=['POST', 'GET'])
 def home():
     message = [1,2,3]
-    return render_template("home.html", message=message)
+    seat_letters = ["K", "J", "I", "H", "G", "F","--", "E", "D", "C", "B","--", "A"]
+    return render_template("home.html", seat_letters=seat_letters)
 
 
 @views.route('/reservations', methods=['POST', 'GET'])

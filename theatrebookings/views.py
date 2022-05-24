@@ -1,3 +1,4 @@
+from email import message
 from flask import Blueprint, render_template, request, flash, jsonify
 from .models import User
 from . import db
@@ -12,21 +13,21 @@ def home():
     return render_template("home.html", message=message)
 
 
-@views.route('/', methods=['POST', 'GET'])
+@views.route('/reservations', methods=['POST', 'GET'])
 def reservations():
-    pass
+    return render_template("reservations.html")
 
 
-@views.route('/', methods=['POST', 'GET'])
+@views.route('/reserve', methods=['POST', 'GET'])
 def create_reservation():
-    pass
+    return render_template("create_reservation.html")
 
 
-@views.route('/', methods=['POST', 'GET'])
+@views.route('/edit/reservation', methods=['POST', 'GET'])
 def edit_reservation():
-    pass
+    return render_template("edit_reservation.html")
 
 
-@views.route('/', methods=['POST', 'GET'])
+@views.route('/profile', methods=['POST', 'GET'])
 def profile():
-    pass
+    return render_template("profile.html")

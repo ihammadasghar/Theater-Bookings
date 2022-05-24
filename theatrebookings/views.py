@@ -32,3 +32,13 @@ def edit_reservation():
 @views.route('/profile', methods=['POST', 'GET'])
 def profile():
     return render_template("profile.html")
+
+
+@views.route('/login', methods=['POST', 'GET'])
+def login():
+    return render_template("login.html")
+
+
+@views.route('/register', methods=['POST', 'GET'])
+def register():
+    return render_template("register.html")

@@ -1,5 +1,5 @@
-from . import db
-from .models import Seat
+from ..database import db
+from ..models import Seat
 
 def generate_seats():
     a = {"K": 14, "J": 14, "I": 14, "H": 14, "G": 14, "F": 8,"E": 14, "D": 14, "C": 14, "B": 14,"A": 8}
@@ -12,3 +12,9 @@ def generate_seats():
                 vip = True
                 price = 12.00
             seat = Seat(position, vip, price)
+            db.session.add(seat)
+    db.session.commit()
+
+
+def get_all():
+    return Seat.query.all()

@@ -1,16 +1,14 @@
-from email import message
 from flask import Blueprint, render_template, request, flash, jsonify
-from .models import User
-from . import db
-import json
+from .controllers import SeatController  as sctlr
 
 views = Blueprint('views', __name__)
 
 
 @views.route('/', methods=['POST', 'GET'])
 def home():
+    seats = sctlr.get_all()
     seat_letters = ["K", "J", "I", "H", "G", "F","--", "E", "D", "C", "B","--", "A"]
-    return render_template("home.html", seat_letters=seat_letters)
+    return render_template("home.html", seat_letters=seat_letters, seats=seats)
 
 
 @views.route('/reservations', methods=['POST', 'GET'])

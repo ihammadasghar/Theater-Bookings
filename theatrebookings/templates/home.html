@@ -39,13 +39,19 @@
             <th style="color:white">
               --
             </th>
-          {% elif i in [5,12] and j in [8,9,10,11]%}
+          {% elif i in [5,12] and j in [8,9,10,11] %}
+           
             <th style = "border: 1px solid; background-color: gold;border-color: white;">
-              {{j}}
+              {{j-5}}
             </th>
+           
           {% else %}
             <th style= "border: 1px solid;border-color: white ;color: white; background-color: lightslategrey;">
-              {{j}}
+              {% if j-2 <= 0 %}
+                {{ j }}
+              {% else %}
+                {{ j-2 }}
+              {% endif %}
             </th>
           {% endif %}
         {% endfor%}

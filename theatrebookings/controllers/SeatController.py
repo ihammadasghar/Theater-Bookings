@@ -8,7 +8,7 @@ def generate_seats():
             position = letter + str(i)
             vip = False
             price = 4.00
-            if num == 8 and num in [3, 4, 5, 6]:
+            if letter in ["F", "A"] and i in [3, 4, 5, 6]:
                 vip = True
                 price = 12.00
             seat = Seat(position, vip, price)

@@ -10,16 +10,17 @@
     <li>top films</li>
     <li>reservations</li>
   </ol>
-  <table style="width: 90%; height: 500px; border: 1px solid;">
+  <table style="width: 90%;text-align: center;; height: 500px; border: 1px solid;border-color: white;">
+    
     <!-- number of rows -->
     {% for i in range(13)%}
     <tr> 
       {% if seat_letters[i] != "--" %}
-      <th style= "border: 1px solid;">
+      <th style= "border: 1px solid;text-align: center;width: 3%; background-color: black; color: white; border-color: black;">
         {{ seat_letters[i] }}
       </th>
       {% else %}
-      <th>
+      <th style="color:white">
         {{  seat_letters[i]  }}
       </th>
       {% endif %}
@@ -27,20 +28,26 @@
       <!--Number of collums-->
         {%for j in range(1, 19)%}
           {% if i in [6,11]%}
-            <th>
+            <th style="color:white">
               --
             </th>
           {% elif i in [5,12] and j in [5,6,7,12,13,14]%}
-            <th>
+            <th style="color:white">
               --
             </th>
           {% elif j in [3,4,15,16]%}
-            <th>
+            <th style="color:white">
               --
             </th>
+          {% elif seats[0].vip %}
+           
+            <th style = "border: 1px solid; width: 5%; background-color: gold;border-color: white;">
+              <a href="/reserve/{{seats[0].id}}" style="text-decoration:none;color: black;">{{ seats.pop(0).position }} </a>
+            </th>
+           
           {% else %}
-            <th style= "border: 1px solid;">
-              {{j}}
+            <th style= "border: 1px solid; width:5%; border-color: white ;color: white; background-color: lightslategrey;">
+              <a href="/reserve/{{seats[0].id}}" style="text-decoration:none;color: white;">{{ seats.pop(0).position }}</a>
             </th>
           {% endif %}
         {% endfor%}

@@ -6,7 +6,6 @@ def create():
     # TODO: get information about user in parameters, make a user object and save it in the data base 
     pass
 
-
 def delete():
     # TODO: get user id in parameter, find the user using query and delete it from the database 
     pass 

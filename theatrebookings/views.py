@@ -7,6 +7,10 @@ views = Blueprint('views', __name__)
 @views.route('/', methods=['POST', 'GET'])
 def home():
     seats = sctlr.get_all()
+    if not seats:
+        sctlr.generate_seats()
+        seats = sctlr.get_all()
+        
     seat_letters = ["K", "J", "I", "H", "G", "F","--", "E", "D", "C", "B","--", "A"]
     return render_template("home.html", seat_letters=seat_letters, seats=seats)
 

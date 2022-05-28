@@ -1,5 +1,4 @@
-from models import Shows
-from theatrebookings.models import Show
+from ..models import Show
 from .. import db
 
 # db functions syntax:

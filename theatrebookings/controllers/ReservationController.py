@@ -1,4 +1,4 @@
-from models import Reservation
+from ..models import Reservation
 from .. import db
 
 # db functions syntax:
@@ -11,26 +11,29 @@ from .. import db
 # Get list of all reservations: Reservation.query.all()
 # more examples of querying ways: https://flask-sqlalchemy.palletsprojects.com/en/2.x/queries/
 
-def create():
-    # TODO: get information about reservation in parameters, make a reservation object and save it in the data base 
-    pass
+def create(user_id, seat_id, show_id):
+    reservation = Reservation(user_id, seat_id, show_id)
+    db.session.add(reservation)
+    db.session.commit()
+    return True
 
 
-def delete():
-    # TODO: get reservation id in parameter, find the reservation using query and delete it from the database 
-    pass 
+def delete(id):
+    reservation = Reservation.query.get(id)
+    db.session.delete(reservation)
+    db.session.commit()
+    return True
 
 
-def update():
-    # TODO: get new information about reservation in parameters and reservation id, find the reservation using query and update it in the database 
-    pass
+def update(id, user_id, seat_id, show_id):
+    reservation = Reservation.query.get(id)
+    reservation.user_id = user_id
+    reservation.seat_id = seat_id
+    reservation.show_id = show_id
+    db.session.commit()
+    return True
 
 
 def get():
-    # TODO: get reservation id as a parameter, find the reservation using query and return the reservation 
-    pass
-
-
-def get_reservation_reservations():
-    # TODO: get reservation_id as a parameter, get all the reservations of the reservation from the database and return them as a list
-    pass
+    reservation = Reservation.query.get(id)
+    return reservation

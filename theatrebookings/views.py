@@ -1,8 +1,7 @@
-from lib2to3.pytree import _Results
-import re
-from flask import Blueprint, render_template, request, flash, jsonify
+from flask import Blueprint, redirect, render_template, request
 from .controllers import SeatController  as sctlr
 from .controllers import ShowController as showctlr
+from .controllers import ReservationController as rctlr
 
 views = Blueprint('views', __name__)
 
@@ -18,19 +17,15 @@ def home():
     return render_template("home.html", seat_letters=seat_letters, seats=seats)
 
 
-@views.route('/reservations', methods=['POST', 'GET'])
-def reservations():
-    return render_template("reservations.html")
+@views.route('/reserve/<show_id>/<seat_id>', methods=['POST', 'GET'])
+def create_reservation(show_id, seat_id):
+    if request.method == "GET":
+        show = showctlr.get(show_id)
+        seat = sctlr.get(seat_id)
+        return render_template("create_reservation.html", show=show, seat=seat)
 
-
-@views.route('/reserve', methods=['POST', 'GET'])
-def create_reservation():
-    return render_template("create_reservation.html")
-
-
-@views.route('/edit/reservation', methods=['POST', 'GET'])
-def edit_reservation():
-    return render_template("edit_reservation.html")
+    rctlr.create(1, seat_id, show_id)
+    return redirect("/profile")
 
 
 @views.route('/profile', methods=['POST', 'GET'])

@@ -25,11 +25,29 @@ def delete(id):
     db.session.commit()
     return True
 
+
+def update(name, date, genre, duration, description, time, id):
+    show = Show.query.get(id)
+    show.name = name
+    show.date = date
+    show.genre = genre
+    show.duration = duration
+    show.description = description
+    show.time = time
+    db.session.commit()
+    return True
+
+
 def get(id):
     # TODO: get show id as a parameter, find the show using query and return the show 
     shw = Show.query.get(id)
     Show.query.get(id)
     return shw
+
+
+def get_reservations(id):
+    shw = Show.query.get(id)
+    return shw.reservations
 
 
 def get_first(num):

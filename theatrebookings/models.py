@@ -48,10 +48,8 @@ class Reservation(db.Model):
     seat_id = db.Column(db.Integer, db.ForeignKey('seat.id'))   # 1 reservation has 1 seat
     show_id = db.Column(db.Integer, db.ForeignKey('show.id'))   # 1 reservation has 1 show
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))   # i reservation has 1 user
-    date = db.Column(db.DateTime(timezone=True))
 
-    def __init__(self, user_id: int, seat_id: int, show_id: int, date: datetime) -> None:
+    def __init__(self, user_id: int, seat_id: int, show_id: int) -> None:
         self.user_id = user_id
         self.seat_id = seat_id
         self.show_id = show_id
-        self.date = date

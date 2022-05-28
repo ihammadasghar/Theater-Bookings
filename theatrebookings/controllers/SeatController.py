@@ -18,3 +18,7 @@ def generate_seats():
 
 def get_all():
     return Seat.query.all()
+
+
+def get(id):
+    return Seat.query.get(id)

@@ -1,8 +1,7 @@
-from . import db
 from sqlalchemy.sql import func
 import datetime
 import time
-
+from .database import db
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -19,7 +18,7 @@ class Seat(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     position = db.Column(db.String(3))
     vip = db.Column(db.Boolean)
-    reservation_id = db.Column(db.Integer, db.ForeignKey('reservation.id'))  # 1 seat has 1 reservation
+    reservations = db.relationship('Reservation')  # 1 seat has many reservations
     
     def __init__(self, position: str, vip: bool, price: float) -> None:
         self.position = position

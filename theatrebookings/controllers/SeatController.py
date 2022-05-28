@@ -1,4 +1,4 @@
-from ..database import db
+from ..settings import db
 from ..models import Seat
 
 def generate_seats():

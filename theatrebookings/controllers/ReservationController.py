@@ -25,7 +25,7 @@ def delete(id):
     return True
 
 
-def update(user_id, seat_id, show_id, date):
+def update(id, user_id, seat_id, show_id, date):
     reservation = Reservation.query.get(id)
     reservation.user_id = user_id
     reservation.seat_id = seat_id

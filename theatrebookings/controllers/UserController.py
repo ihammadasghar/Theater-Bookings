@@ -1,5 +1,6 @@
 from models import Reservation, User
 from .. import db
+from .. import logged_in_user
 
 # db functions syntax:
 # db.session.add(item) create item
@@ -19,15 +20,12 @@ def create(name, email):
     return True
 
 
-
 def delete(id):
     # TODO: get user id in parameter, find the user using query and delete it from the database 
     user = User.query.get(id)
     db.session.delete(user)
     db.session.commit()
     return True
-
-
 
 
 def update(new_name, new_email, id):
@@ -37,6 +35,7 @@ def update(new_name, new_email, id):
     user.email = new_email
     db.session.commit()
     return True
+
 
 def get(id):
     # TODO: get user id as a parameter, find the user using query and return the user 
@@ -48,3 +47,17 @@ def get_all():
     # TODO: get all the users from the database and return them as a list
     user = User.query.all()
     return user
+
+
+def login(name, email):
+    user = User.query.filter_by(name=name, email=email).first()
+    if user:
+        global logged_in_user 
+        logged_in_user = user
+        return True
+    return False
+
+
+def logout():
+    global logged_in_user 
+    logged_in_user = None

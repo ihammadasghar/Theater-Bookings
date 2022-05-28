@@ -28,12 +28,6 @@ def create_reservation(show_id, seat_id):
     return redirect("/profile")
 
 
-
-@views.route('/edit/reservation', methods=['POST', 'GET'])
-def edit_reservation():
-    return render_template("edit_reservation.html")
-
-
 @views.route('/profile', methods=['POST', 'GET'])
 def profile():
     return render_template("profile.html")

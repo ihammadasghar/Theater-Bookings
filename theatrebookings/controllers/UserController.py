@@ -11,25 +11,40 @@ from .. import db
 # Get list of all users: User.query.all()
 # more examples of querying ways: https://flask-sqlalchemy.palletsprojects.com/en/2.x/queries/
 
-def create():
+def create(name, email):
     # TODO: get information about user in parameters, make a user object and save it in the data base 
-    pass
+    user = User(name, email)
+    db.session.add(user)
+    db.session.commit()
+    return True
 
-def delete():
+
+
+def delete(id):
     # TODO: get user id in parameter, find the user using query and delete it from the database 
-    pass 
+    user = User.query.get(id)
+    db.session.delete(user)
+    db.session.commit()
+    return True
 
 
-def update():
+
+
+def update(new_name, new_email, id):
     # TODO: get new information about user in parameters and user id, find the user using query and update it in the database 
-    pass
+    user = User.query.get(id)
+    user.name = new_name
+    user.email = new_email
+    db.session.commit()
+    return True
 
-
-def get():
+def get(id):
     # TODO: get user id as a parameter, find the user using query and return the user 
-    pass
+    user =  User.query.get(id)
+    return user
 
 
 def get_all():
     # TODO: get all the users from the database and return them as a list
-    pass
+    user = User.query.all()
+    return user

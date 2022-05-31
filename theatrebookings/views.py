@@ -1,3 +1,5 @@
+from datetime import date, datetime
+from sqlite3 import Date
 from flask import Blueprint, redirect, render_template, request
 from .controllers import SeatController  as sctlr
 from .controllers import ShowController as showctlr
@@ -76,8 +78,14 @@ def search_results(search_word):
 
 @views.route('/shows/add', methods=['POST', 'GET'])
 def add_show():
-    name = request.form["name"]
-    description = request.form["description"]
-    
-    showctlr.create(name, None, None, None, description, None)
+    if request.method == "POST":
+        name = str(request.form["name"])
+        description = str(request.form["description"])
+        genre = str(request.form["genre"])
+        date = datetime.strptime(str(request.form["date"]), '%Y-%m-%d')
+        duration = int(request.form["duration"])
+        time = datetime.strptime(request.form["time"], '%H:%M').time()
+        showctlr.create(name, date, genre, duration, description, time)
+    else:
+        pass
     return render_template("add_show.html", user=userctlr.get_logged_in_user())

@@ -41,6 +41,7 @@ class Show(db.Model):
         self.duration = duration
         self.date = date
         self.description = description
+        self.time = time
 
 
 class Reservation(db.Model):

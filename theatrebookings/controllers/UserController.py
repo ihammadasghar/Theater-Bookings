@@ -61,3 +61,6 @@ def login(name, email):
 def logout():
     global logged_in_user 
     logged_in_user = None
+
+def get_logged_in_user():
+    return logged_in_user

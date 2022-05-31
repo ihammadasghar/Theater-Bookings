@@ -3,7 +3,6 @@ from .controllers import SeatController  as sctlr
 from .controllers import ShowController as showctlr
 from .controllers import ReservationController as rctlr
 from .controllers import UserController as userctlr
-from .settings import logged_in_user
 
 views = Blueprint('views', __name__)
 
@@ -16,7 +15,7 @@ def home():
         seats = sctlr.get_all()
         
     seat_letters = ["K", "J", "I", "H", "G", "F","--", "E", "D", "C", "B","--", "A"]
-    return render_template("home.html", seat_letters=seat_letters, seats=seats, user=logged_in_user)
+    return render_template("home.html", seat_letters=seat_letters, seats=seats, user=userctlr.get_logged_in_user())
 
 
 @views.route('/reserve/<show_id>/<seat_id>', methods=['POST', 'GET'])
@@ -27,7 +26,7 @@ def create_reservation(show_id, seat_id):
         return render_template("create_reservation.html", show=show, seat=seat)
 
     rctlr.create(1, seat_id, show_id)
-    return redirect("/profile")
+    return redirect("/profile", user=userctlr.get_logged_in_user())
 
 
 @views.route('/profile', methods=['POST', 'GET'])
@@ -43,7 +42,7 @@ def login():
         if userctlr.login(name, email):
             return redirect("/")
         return render_template("login.html")
-    return render_template("login.html")
+    return render_template("login.html", user=userctlr.get_logged_in_user())
 
 
 @views.route('/logout', methods=['GET'])
@@ -60,24 +59,25 @@ def register():
         userctlr.create(name, email)
         userctlr.login(name, email)
         return redirect("/")
-    return render_template("register.html")
+    return render_template("register.html", , user=userctlr.get_logged_in_user())
 
 
 @views.route('/show/<show_id>', methods=['POST', 'GET'])
 def show_details(show_id):
     show = showctlr.get(show_id)
-    return render_template("show_details.html", show=show)
+    return render_template("show_details.html", show=show, user=userctlr.get_logged_in_user())
 
 
 @views.route('/search/<search_word>', methods=['POST', 'GET'])
 def search_results(search_word):
     results = showctlr.search(search_word)
-    return render_template("search_results.html", results=results)
+    return render_template("search_results.html", results=results, , user=userctlr.get_logged_in_user())
 
 
 @views.route('/shows/add', methods=['POST', 'GET'])
 def add_show():
     name = request.form["name"]
     description = request.form["description"]
+    
     showctlr.create(name, None, None, None, description, None)
-    return render_template("add_show.html")
+    return render_template("add_show.html", , user=userctlr.get_logged_in_user())

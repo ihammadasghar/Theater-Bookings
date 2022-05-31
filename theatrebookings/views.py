@@ -31,7 +31,7 @@ def create_reservation(show_id, seat_id):
 
 @views.route('/profile', methods=['POST', 'GET'])
 def profile():
-    return render_template("profile.html")
+    return render_template("profile.html", user=userctlr.get_logged_in_user())
 
 
 @views.route('/login', methods=['POST', 'GET'])
@@ -59,7 +59,7 @@ def register():
         userctlr.create(name, email)
         userctlr.login(name, email)
         return redirect("/")
-    return render_template("register.html", , user=userctlr.get_logged_in_user())
+    return render_template("register.html", user=userctlr.get_logged_in_user())
 
 
 @views.route('/show/<show_id>', methods=['POST', 'GET'])
@@ -71,7 +71,7 @@ def show_details(show_id):
 @views.route('/search/<search_word>', methods=['POST', 'GET'])
 def search_results(search_word):
     results = showctlr.search(search_word)
-    return render_template("search_results.html", results=results, , user=userctlr.get_logged_in_user())
+    return render_template("search_results.html", results=results, user=userctlr.get_logged_in_user())
 
 
 @views.route('/shows/add', methods=['POST', 'GET'])
@@ -80,4 +80,4 @@ def add_show():
     description = request.form["description"]
     
     showctlr.create(name, None, None, None, description, None)
-    return render_template("add_show.html", , user=userctlr.get_logged_in_user())
+    return render_template("add_show.html", user=userctlr.get_logged_in_user())

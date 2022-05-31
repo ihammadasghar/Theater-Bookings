@@ -2,6 +2,8 @@ from flask import Blueprint, redirect, render_template, request
 from .controllers import SeatController  as sctlr
 from .controllers import ShowController as showctlr
 from .controllers import ReservationController as rctlr
+from .controllers import UserController as userctlr
+from .settings import logged_in_user
 
 views = Blueprint('views', __name__)
 
@@ -14,7 +16,7 @@ def home():
         seats = sctlr.get_all()
         
     seat_letters = ["K", "J", "I", "H", "G", "F","--", "E", "D", "C", "B","--", "A"]
-    return render_template("home.html", seat_letters=seat_letters, seats=seats)
+    return render_template("home.html", seat_letters=seat_letters, seats=seats, user=logged_in_user)
 
 
 @views.route('/reserve/<show_id>/<seat_id>', methods=['POST', 'GET'])
@@ -35,11 +37,29 @@ def profile():
 
 @views.route('/login', methods=['POST', 'GET'])
 def login():
+    if request.method == "POST":
+        name = request.form["name"]
+        email = request.form["email"]
+        if userctlr.login(name, email):
+            return redirect("/")
+        return render_template("login.html")
     return render_template("login.html")
+
+
+@views.route('/logout', methods=['GET'])
+def logout():
+    userctlr.logout()
+    return redirect("/")
 
 
 @views.route('/register', methods=['POST', 'GET'])
 def register():
+    if request.method == "POST":
+        name = request.form["name"]
+        email = request.form["email"]
+        userctlr.create(name, email)
+        userctlr.login(name, email)
+        return redirect("/")
     return render_template("register.html")
 
 

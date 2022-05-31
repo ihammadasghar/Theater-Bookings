@@ -1,4 +1,4 @@
-from models import Reservation, User
+from ..models import Reservation, User
 from .. import db
 from .. import logged_in_user
 

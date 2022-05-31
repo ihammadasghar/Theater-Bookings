@@ -22,15 +22,17 @@ def home():
 
 @views.route('/reserve/<show_id>/<seat_id>', methods=['POST', 'GET'])
 def create_reservation(show_id, seat_id):
+    user=userctlr.get_logged_in_user()
     if request.method == "GET":
         show = showctlr.get(show_id)
         seat = sctlr.get(seat_id)
-        return render_template("create_reservation.html", show=show, seat=seat)
+        return render_template("create_reservation.html", show=show, seat=seat, user=user)
 
-    rctlr.create(1, seat_id, show_id)
-    return redirect("/profile", user=userctlr.get_logged_in_user())
+    rctlr.create(user.id, seat_id, show_id)
+    return redirect("/profile", user=user)
 
 
+# User views
 @views.route('/profile', methods=['POST', 'GET'])
 def profile():
     return render_template("profile.html", user=userctlr.get_logged_in_user())
@@ -64,6 +66,7 @@ def register():
     return render_template("register.html", user=userctlr.get_logged_in_user())
 
 
+# Show views
 @views.route('/show/<show_id>', methods=['POST', 'GET'])
 def show_details(show_id):
     show = showctlr.get(show_id)

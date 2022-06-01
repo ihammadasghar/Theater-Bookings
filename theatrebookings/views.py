@@ -10,14 +10,8 @@ views = Blueprint('views', __name__)
 
 
 @views.route('/', methods=['POST', 'GET'])
-def home():
-    seats = sctlr.get_all()
-    if not seats:
-        sctlr.generate_seats()
-        seats = sctlr.get_all()
-        
-    seat_letters = ["K", "J", "I", "H", "G", "F","--", "E", "D", "C", "B","--", "A"]
-    return render_template("home.html", seat_letters=seat_letters, seats=seats, user=userctlr.get_logged_in_user())
+def home(): 
+    return render_template("home.html", user=userctlr.get_logged_in_user())
 
 
 @views.route('/reserve/<show_id>/<seat_id>', methods=['POST', 'GET'])
@@ -70,7 +64,14 @@ def register():
 @views.route('/show/<show_id>', methods=['POST', 'GET'])
 def show_details(show_id):
     show = showctlr.get(show_id)
-    return render_template("show_details.html", show=show, user=userctlr.get_logged_in_user())
+    seats = sctlr.get_all()
+    if not seats:
+        sctlr.generate_seats()
+        seats = sctlr.get_all()
+
+    reserved_seats_ids = showctlr.get_reserved_seats_ids(show_id)  
+    seat_letters = ["K", "J", "I", "H", "G", "F","--", "E", "D", "C", "B","--", "A"]
+    return render_template("show_details.html", show=show, seat_letters=seat_letters, seats=seats, reserved_seats_ids=reserved_seats_ids, user=userctlr.get_logged_in_user())
 
 
 @views.route('/search/<search_word>', methods=['POST', 'GET'])

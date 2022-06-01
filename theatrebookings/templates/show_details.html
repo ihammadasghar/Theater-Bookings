@@ -10,11 +10,15 @@
     <li>Show details</li>
     <li>Show seats</li>
   </ol>
-  <div class="card" style="width: 18rem;">
+  <div class="card" style="width: 95%;box-shadow: 2px 3px #888888;">
     <div class="card-body">
-      <h5 class="card-title">{{show.name}}</h5>
-      <p class="card-description">{{show.description}}</p>
-      <a href="#" class="btn btn-primary">Reserve</a>
+      <h5  style= "color: black;"class="card-title">{{show.name}}</h5>
+      <span style="background-color: orange; color: black;"class="badge badge-genre">{{show.genre}}</span>
+      <span style="background-color: lightskyblue"class="badge badge-duration">{{show.duration}}h</span>
+      <span style="background-color: lightsteelblue"class="badge badge-time">{{show.date}}</span>
+      <div class="description">
+        <p class="card-description" style="width: 95%;">{{show.description}}</p>
+      </div>
     </div>
   </div>
 {% endblock %}

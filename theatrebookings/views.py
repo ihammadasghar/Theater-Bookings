@@ -39,7 +39,7 @@ def login():
         email = request.form["email"]
         if userctlr.login(name, email):
             return redirect("/")
-        return render_template("login.html")
+        return redirect("/login")
     return render_template("login.html", user=userctlr.get_logged_in_user())
 
 
@@ -61,7 +61,7 @@ def register():
 
 
 # Show views
-@views.route('/show/<show_id>', methods=['POST', 'GET'])
+@views.route('/shows/<show_id>', methods=['POST', 'GET'])
 def show_details(show_id):
     show = showctlr.get(show_id)
     seats = sctlr.get_all()

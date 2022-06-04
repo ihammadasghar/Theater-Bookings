@@ -11,15 +11,22 @@
     <li>Show seats</li>
   </ol>
   <div class="card" style="width: 95%;box-shadow: 2px 3px #888888;">
-    <div class="card-body">
-      <h5  style= "color: black;"class="card-title">{{show.name}}</h5>
-      <span style="background-color: orange; color: black;"class="badge badge-genre">{{show.genre}}</span>
-      <span style="background-color: lightskyblue"class="badge badge-duration">{{show.duration}}h</span>
-      <span style="background-color: lightsteelblue"class="badge badge-time">{{show.date}}</span>
-      <div class="description">
-        <p class="card-description" style="width: 95%;">{{show.description}}</p>
+    <div class="row">
+      <div class="col">
+        <div class="card-body">
+          <h5  style= "color: black;"class="card-title">{{show.name}}</h5>
+          <span style="background-color: orange; color: black;"class="badge badge-genre">{{show.genre}}</span>
+          <span style="background-color: lightskyblue"class="badge badge-duration">{{show.duration}}h</span>
+          <span style="background-color: lightsteelblue"class="badge badge-time">{{show.date}}</span>
+          <div class="description">
+            <p class="card-description" style="width: 95%;">{{show.description}}</p>
+          </div>
+        </div>
       </div>
-    </div>
+      <div class="col">
+        <img src={{show.img_link}} class="card-img-top" alt="..."  width="500" height="500">
+      </div>
+      </div>
   </div>
   <br>
   <table style="width: 90%;text-align: center;; height: 500px; border: 1px solid;border-color: white;">

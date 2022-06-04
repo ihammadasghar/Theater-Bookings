@@ -93,3 +93,4 @@ def add_show():
     else:
         pass
     return render_template("add_show.html", user=userctlr.get_logged_in_user())
+    

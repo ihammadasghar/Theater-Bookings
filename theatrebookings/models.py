@@ -33,15 +33,17 @@ class Show(db.Model):
     duration = db.Column(db.Integer)
     date = db.Column(db.DateTime(timezone=True))
     description = db.Column(db.String(150))
+    img_link = db.Column(db.String(500))
     reservations = db.relationship('Reservation')  # 1 show has reservations
 
-    def __init__(self, name: str, date: datetime, genre: str, duration: int, description: str, time: time) -> None:
+    def __init__(self, name: str, date: datetime, genre: str, duration: int, description: str, time: time, img_link: str) -> None:
         self.name = name
         self.genre = genre
         self.duration = duration
         self.date = date
         self.description = description
         self.time = time
+        self.img_link = img_link
 
 
 class Reservation(db.Model):

@@ -88,8 +88,9 @@ def add_show():
         genre = str(request.form["genre"])
         date = datetime.strptime(str(request.form["date"]), '%Y-%m-%d')
         duration = int(request.form["duration"])
+        img_link = str(request.form["img"])
         time = datetime.strptime(request.form["time"], '%H:%M').time()
-        showctlr.create(name, date, genre, duration, description, time)
+        showctlr.create(name, date, genre, duration, description, time, img_link)
     else:
         pass
     return render_template("add_show.html", user=userctlr.get_logged_in_user())

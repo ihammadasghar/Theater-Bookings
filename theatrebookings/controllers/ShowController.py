@@ -11,8 +11,8 @@ from .. import db
 # Get list of all shows: Show.query.all()
 # more examples of querying ways: https://flask-sqlalchemy.palletsprojects.com/en/2.x/queries/
 
-def create(name, date, genre, duration, description, time):
-    shw = Show(name,date,genre,duration,description,time)
+def create(name, date, genre, duration, description, time, img):
+    shw = Show(name,date,genre,duration,description,time,img)
     db.session.add(shw)
     db.session.commit()
     return True
@@ -25,7 +25,7 @@ def delete(id):
     return True
 
 
-def update(name, date, genre, duration, description, time, id):
+def update(name, date, genre, duration, description, time, id,img):
     show = Show.query.get(id)
     show.name = name
     show.date = date
@@ -33,6 +33,7 @@ def update(name, date, genre, duration, description, time, id):
     show.duration = duration
     show.description = description
     show.time = time
+    show.img = img
     db.session.commit()
     return True
 

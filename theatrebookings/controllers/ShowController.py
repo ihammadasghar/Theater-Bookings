@@ -58,4 +58,10 @@ def get_first(num):
 
 def search(search):
     # TODO: search all the shows with names starting with "search"
-    Show.query.filter_by(Show.name.startswith(search)).all()
+    return Show.query.filter_by(Show.name.startswith(search)).all()
+
+
+def get_reserved_seats_ids(id):
+    show = get(id)
+    seat_ids = [res.seat_id for res in show.reservations]
+    return seat_ids

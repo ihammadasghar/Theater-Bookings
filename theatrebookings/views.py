@@ -93,3 +93,14 @@ def add_show():
     else:
         pass
     return render_template("add_show.html", user=userctlr.get_logged_in_user())
+
+
+@views.route('/reserve/<show_id>/<seat_id>', methods=['POST', 'GET'])
+def add_reserve(show_id, seat_id):
+    if request.method == "POST":
+       user = userctlr.get_logged_in_user()
+       rctlr.create(user.id, show_id, seat_id)
+       return redirect('/')
+    else:
+        pass
+    return render_template("creat_reservation.html", user=userctlr.get_logged_in_user())

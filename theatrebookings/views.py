@@ -19,7 +19,7 @@ def home():
 def profile():
     user = userctlr.get_logged_in_user()
     reservations = reservationctlr.get_user_reservations(user.id)
-    reservations = [(showctlr.get(res.show_id), seatctlr.get(res.seat_id)) for res in reservations]
+    reservations = [(res.id, showctlr.get(res.show_id), seatctlr.get(res.seat_id)) for res in reservations]
     return render_template("reservations.html", reservations=reservations, user=user)
 
 

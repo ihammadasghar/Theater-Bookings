@@ -5,7 +5,7 @@
 
 {% block body %}
 
-{% for show, seat in reservations %}
+{% for id, show, seat in reservations %}
 <div class="card">
   <div class="card-body">
     <h5 class="card-title">Reservation</h5>
@@ -17,6 +17,8 @@
       <b>Name: </b>{{ user.name }}<br>
       <b>Email: </b>{{ user.email }}<br>
     </p>
+    <a class="btn btn-warning" href="/reservations/edit/{{ id }}">Edit</a>
+    <a class="btn btn-danger" href="/reservations/delete/{{ id }}">Cancel</a>
   </div>
 </div>
 {% endfor %}

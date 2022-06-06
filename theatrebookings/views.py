@@ -1,9 +1,9 @@
 from datetime import date, datetime
 from sqlite3 import Date
 from flask import Blueprint, redirect, render_template, request
-from .controllers import SeatController  as sctlr
+from .controllers import SeatController  as seatctlr
 from .controllers import ShowController as showctlr
-from .controllers import ReservationController as rctlr
+from .controllers import ReservationController as reservationctlr
 from .controllers import UserController as userctlr
 
 views = Blueprint('views', __name__)
@@ -19,10 +19,10 @@ def create_reservation(show_id, seat_id):
     user=userctlr.get_logged_in_user()
     if request.method == "GET":
         show = showctlr.get(show_id)
-        seat = sctlr.get(seat_id)
+        seat = seatctlr.get(seat_id)
         return render_template("create_reservation.html", show=show, seat=seat, user=user)
 
-    rctlr.create(user.id, seat_id, show_id)
+    reservationctlr.create(user.id, seat_id, show_id)
     return redirect("/profile", user=user)
 
 
@@ -64,10 +64,10 @@ def register():
 @views.route('/shows/<show_id>', methods=['POST', 'GET'])
 def show_details(show_id):
     show = showctlr.get(show_id)
-    seats = sctlr.get_all()
+    seats = seatctlr.get_all()
     if not seats:
-        sctlr.generate_seats()
-        seats = sctlr.get_all()
+        seatctlr.generate_seats()
+        seats = seatctlr.get_all()
 
     reserved_seats_ids = showctlr.get_reserved_seats_ids(show_id)  
     seat_letters = ["K", "J", "I", "H", "G", "F","--", "E", "D", "C", "B","--", "A"]
@@ -94,4 +94,15 @@ def add_show():
     else:
         pass
     return render_template("add_show.html", user=userctlr.get_logged_in_user())
+
+
+@views.route('/reservations/<show_id>/<seat_id>', methods=['POST', 'GET'])
+def add_reserve(show_id, seat_id):
+    if request.method == "POST":
+       user = userctlr.get_logged_in_user()
+       reservationctlr.create(user.id, show_id, seat_id)
+       return redirect('/')
     
+    show = showctlr.get(show_id)
+    seat = seatctlr.get(seat_id)
+    return render_template("create_reservation.html", show=show, seat=seat, user=userctlr.get_logged_in_user())

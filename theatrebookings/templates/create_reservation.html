@@ -13,7 +13,7 @@
       <b>Date: </b>{{ show.date }}<br>
       <b>Time: </b>{{ show.time }}
     </p>
-    <form action="/reserve/{{ show.id }}/{{ seat.id }}" method="post">
+    <form action="/reservations/{{ show.id }}/{{ seat.id }}" method="post">
       <button type="submit" style="width: 100%;" class="btn btn-primary">Confirm reservation</button>
     </form>
   </div>

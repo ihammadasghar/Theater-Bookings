@@ -1,19 +1,24 @@
 ## Topics:
-- [How to contribute](#How-to-contribute)
+- [Setup](#Setting-up)
+- [How to contribute](#Adding-a-feature-to-the-project)
 
-## How to contribute:
+## Setting up:
 1. Clone the Repository
 ```
 git clone https://github.com/ihammadasghar/Theatre-Bookings.git
 ```
-cd to Theatre-Bookings and dowload all the required packages/libraries:
+2. cd to Theatre-Bookings and dowload all the required packages/libraries:
 ```
 pip install -r requirements.txt
+pip install flask_sqlalchemy
 ```
-2. Make a new branch with the your feature name (e.g. "git branch greeting_feature")
+## Adding a feature to the project
+1. Make a new branch with the your feature name
 ```
-git checkout -b featurename_feature
+git checkout -b branch_name
 ```
+2. Add the changes to the code
+
 3. Add and Commit
 ```
 git add .

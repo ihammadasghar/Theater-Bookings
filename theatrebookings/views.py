@@ -14,22 +14,13 @@ def home():
     return render_template("home.html", user=userctlr.get_logged_in_user())
 
 
-@views.route('/reserve/<show_id>/<seat_id>', methods=['POST', 'GET'])
-def create_reservation(show_id, seat_id):
-    user=userctlr.get_logged_in_user()
-    if request.method == "GET":
-        show = showctlr.get(show_id)
-        seat = seatctlr.get(seat_id)
-        return render_template("create_reservation.html", show=show, seat=seat, user=user)
-
-    reservationctlr.create(user.id, seat_id, show_id)
-    return redirect("/profile", user=user)
-
-
 # User views
-@views.route('/profile', methods=['POST', 'GET'])
+@views.route('/reservations', methods=['GET'])
 def profile():
-    return render_template("profile.html", user=userctlr.get_logged_in_user())
+    user = userctlr.get_logged_in_user()
+    reservations = reservationctlr.get_user_reservations(user.id)
+    reservations = [(showctlr.get(res.show_id), seatctlr.get(res.seat_id)) for res in reservations]
+    return render_template("reservations.html", reservations=reservations, user=user)
 
 
 @views.route('/login', methods=['POST', 'GET'])
@@ -91,13 +82,12 @@ def add_show():
         img_link = str(request.form["img"])
         time = datetime.strptime(request.form["time"], '%H:%M').time()
         showctlr.create(name, date, genre, duration, description, time, img_link)
-    else:
-        pass
+    
     return render_template("add_show.html", user=userctlr.get_logged_in_user())
 
 
 @views.route('/reservations/<show_id>/<seat_id>', methods=['POST', 'GET'])
-def add_reserve(show_id, seat_id):
+def create_reservation(show_id, seat_id):
     if request.method == "POST":
        user = userctlr.get_logged_in_user()
        reservationctlr.create(user.id, show_id, seat_id)

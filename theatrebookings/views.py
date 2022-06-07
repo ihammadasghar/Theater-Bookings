@@ -30,8 +30,10 @@ def login():
         email = request.form["email"]
         if userctlr.login(name, email):
             return redirect("/")
-        return redirect("/login")
-    return render_template("login.html", user=userctlr.get_logged_in_user())
+        
+        message = "Incorrect name or email"
+        return render_template("login.html", message=message, user=userctlr.get_logged_in_user())
+    return render_template("login.html", message=None, user=userctlr.get_logged_in_user())
 
 
 @views.route('/logout', methods=['GET'])

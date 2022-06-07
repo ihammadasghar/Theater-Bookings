@@ -1,4 +1,5 @@
 from datetime import date, datetime
+import re
 from sqlite3 import Date
 from flask import Blueprint, redirect, render_template, request
 from .controllers import SeatController  as seatctlr
@@ -67,10 +68,13 @@ def show_details(show_id):
     return render_template("show_details.html", show=show, seat_letters=seat_letters, seats=seats, reserved_seats_ids=reserved_seats_ids, user=userctlr.get_logged_in_user())
 
 
-@views.route('/search/<search_word>', methods=['POST', 'GET'])
-def search_results(search_word):
-    results = showctlr.search(search_word)
-    return render_template("search_results.html", results=results, user=userctlr.get_logged_in_user())
+@views.route('/search', methods=['POST', 'GET'])
+def search_results():
+    if request.method == "POST":
+        search_word = str(request.form["search_word"])
+        results = showctlr.search(search_word)
+
+    return render_template("search.html", results=results, user=userctlr.get_logged_in_user())
 
 
 @views.route('/shows/add', methods=['POST', 'GET'])

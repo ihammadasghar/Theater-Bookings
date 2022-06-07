@@ -57,9 +57,9 @@ def get_first(num):
     return first_num
 
 
-def search(search):
+def search(search_word):
     # TODO: search all the shows with names starting with "search"
-    return Show.query.filter_by(Show.name.startswith(search)).all()
+    return Show.query.filter(Show.name.startswith(search_word)).all()
 
 
 def get_reserved_seats_ids(id):

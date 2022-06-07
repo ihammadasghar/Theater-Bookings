@@ -4,8 +4,39 @@
 {% endblock %}
 
 {% block body %}
-<h1>Search</h1>
-<ol>
-    <li>Show results of a search</li>
-  </ol>
+{% if results == []%}
+  <div class="alert alert-warning" role="alert">
+    We don't have what you are looking for :/
+  </div>
+  {% else %}
+    <div class="alert alert-success" role="alert">
+      We found these results for you :)
+    </div>
+  {% endif%}
+<div class="row">
+  
+
+  {%for shw in results%}
+    <div class="col">
+      <div class="card" style="width: 18rem;box-shadow:2px 3px #888888">
+        <img src={{shw.img_link}} class="card-img-top" alt="...">
+        <div class="card-body">
+          <div class="row">
+            <h5 class="card-title">{{shw.name}}</h5>
+            <div class="col">
+              <div class="float-right">
+                  <span style="background-color: orange; height: 18px; color: black;"class="badge badge-genre">{{shw.genre}}</span>
+                  <span style="background-color: lightskyblue;height: 18px"class="badge badge-duration">{{shw.duration}}h</span>
+                  <!-- <span style="background-color: lightsteelblue"class="badge badge-time">{{shw.date}}</span> -->
+              </div>
+            </div>
+          </div>
+          <div align="center">
+            <a href="/shows/{{shw.id}}" style="width: 50%;" class="btn btn-primary">Details</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+  </div>
 {% endblock %}

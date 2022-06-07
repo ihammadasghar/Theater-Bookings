@@ -102,3 +102,9 @@ def create_reservation(show_id, seat_id):
     show = showctlr.get(show_id)
     seat = seatctlr.get(seat_id)
     return render_template("create_reservation.html", show=show, seat=seat, user=userctlr.get_logged_in_user())
+
+
+@views.route('/reservations/delete/<reservation_id>/', methods=['GET'])
+def delete_reservation(reservation_id):
+    reservationctlr.delete(reservation_id)
+    return redirect('/reservations')

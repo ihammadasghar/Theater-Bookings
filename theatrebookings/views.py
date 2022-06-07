@@ -9,9 +9,11 @@ from .controllers import UserController as userctlr
 views = Blueprint('views', __name__)
 
 
-@views.route('/', methods=['POST', 'GET'])
+@views.route('/', methods=['GET'])
 def home(): 
-    return render_template("home.html", user=userctlr.get_logged_in_user())
+    if request.method == "GET":
+        shows = showctlr.get_first(10)
+    return render_template("home.html",shows=shows, user=userctlr.get_logged_in_user())
 
 
 # User views

@@ -52,7 +52,7 @@ def get_reservations(id):
 
 def get_first(num):
     # TODO: get first "num" shows from the database and return them as a list
-    shws = Show.query.order_by(Show.num).all()
+    shws = Show.query.order_by(Show.id).all()
     first_num = shws[:num]
     return first_num
 

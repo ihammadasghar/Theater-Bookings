@@ -10,5 +10,28 @@
     <li>top films</li>
     <li>reservations</li>
   </ol>
+  <div class="row">
+  {%for shw in shows%}
+    <div class="col">
+      <div class="card" style="width: 18rem;box-shadow:2px 3px #888888">
+        <img src={{shw.img_link}} class="card-img-top" alt="...">
+        <div class="card-body">
+          <div class="row">
+            <h5 class="card-title">{{shw.name}}</h5>
+            <div class="col">
+              <div class="float-right">
+                  <span style="background-color: orange; height: 18px; color: black;"class="badge badge-genre">{{shw.genre}}</span>
+                  <span style="background-color: lightskyblue;height: 18px"class="badge badge-duration">{{shw.duration}}h</span>
+              </div>
+            </div>
+          </div>
+          <div align="center">
+            <a href="/shows/{{shw.id}}" style="width: 50%;" class="btn btn-primary">Details</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+  </div>
 
 {% endblock %}

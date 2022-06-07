@@ -52,14 +52,14 @@ def get_reservations(id):
 
 def get_first(num):
     # TODO: get first "num" shows from the database and return them as a list
-    shws = Show.query.order_by(Show.num).all()
+    shws = Show.query.order_by(Show.id).all()
     first_num = shws[:num]
     return first_num
 
 
-def search(search):
+def search(search_word):
     # TODO: search all the shows with names starting with "search"
-    return Show.query.filter_by(Show.name.startswith(search)).all()
+    return Show.query.filter(Show.name.startswith(search_word)).all()
 
 
 def get_reserved_seats_ids(id):

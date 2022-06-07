@@ -61,7 +61,7 @@
           {% elif seats[0].id in reserved_seats_ids %}
 
             <th style = "border: 1px solid; width: 5%; background-color: red;border-color: white;">
-              <a href="/reservations/{{show.id}}/{{seats[0].id}}" style="text-decoration:none;color: black;">{{ seats.pop(0).position }} </a>
+              <a style="text-decoration:none;color: black;">{{ seats.pop(0).position }} </a>
             </th>
 
           {% elif seats[0].vip %}

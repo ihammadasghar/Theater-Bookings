@@ -19,8 +19,12 @@ def home():
 
 # User views
 @views.route('/reservations', methods=['GET'])
-def profile():
+def reservations():
+    #  Check if a user is logged in
     user = userctlr.get_logged_in_user()
+    if not user:
+        return redirect('/login')
+
     reservations = reservationctlr.get_user_reservations(user.id)
 
     reservation_details = []
@@ -129,15 +133,19 @@ def screening_details(screening_id):
 
 @views.route('/reservations/<screening_id>/<seat_id>', methods=['POST', 'GET'])
 def create_reservation(screening_id, seat_id):
+    #  Check if a user is logged in
+    user = userctlr.get_logged_in_user()
+    if not user:
+        return redirect('/login')
+
     if request.method == "POST":
-       user = userctlr.get_logged_in_user()
        reservationctlr.create(user.id, screening_id, seat_id)
        return redirect('/')
     
     screening = showctlr.get_screening(screening_id)
     show = showctlr.get(screening.show_id)
     seat = seatctlr.get(seat_id)
-    return render_template("create_reservation.html", screening=screening, show=show, seat=seat, user=userctlr.get_logged_in_user())
+    return render_template("create_reservation.html", screening=screening, show=show, seat=seat, user=user)
 
 
 @views.route('/reservations/delete/<reservation_id>/', methods=['GET'])

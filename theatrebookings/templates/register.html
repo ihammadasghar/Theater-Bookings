@@ -7,28 +7,27 @@
 
 <div class="card" >
   <div class="card-body">
-    <h5 class="card-title">Register to start booking</h5>
+    <h5 class="card-title">Register</h5>
     <form action="/register" method="post">
       <div class="form-group row">
-        <label for="name" class="col-sm-2 col-form-label">Name</label>
+        <label class="col-sm-2 col-form-label">Name</label>
         <div class="col-sm-10">
-          <input type="text" class="form-control" id="name" name="name" placeholder="Your name">
+          <input type="text" class="form-control" name="name" placeholder="Your name">
         </div>
       </div>
       <div class="form-group row">
-          <label for="exampleInputEmail1" class="col-sm-2 col-form-label">Email address</label>
+          <label class="col-sm-2 col-form-label">Email address</label>
           <div class="col-sm-10">
-            <input type="email" class="form-control" name="email" id="exampleInputEmail1"  aria-describedby="emailHelp" placeholder="Enter email">
+            <input type="email" class="form-control" name="email" placeholder="Enter email">
           </div>
         </div>
 
         <div class="form-group row">
-          <label for="exampleInputEmail1" class="col-sm-2 col-form-label">Credit card</label>
+          <label class="col-sm-2 col-form-label">Credit card</label>
           <div class="col-sm-10">
             <input type="number" maxlength="19" class="form-control" name="creditcard" placeholder="Number">
           </div>
         </div>
-
       <button type="submit" style="width: 100%;" class="btn btn-primary">Register</button>
     </form>
   </div>

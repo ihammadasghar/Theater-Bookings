@@ -85,23 +85,21 @@ def add_show():
         name = str(request.form["name"])
         description = str(request.form["description"])
         genre = str(request.form["genre"])
-        date = datetime.strptime(str(request.form["date"]), '%Y-%m-%d')
         duration = int(request.form["duration"])
         img_link = str(request.form["img"])
-        time = datetime.strptime(request.form["time"], '%H:%M').time()
-        showctlr.create(name, date, genre, duration, description, time, img_link)
+        showctlr.create(name, genre, duration, description, img_link)
     
     return render_template("add_show.html", user=userctlr.get_logged_in_user())
 
 
-@views.route('/reservations/<show_id>/<seat_id>', methods=['POST', 'GET'])
-def create_reservation(show_id, seat_id):
+@views.route('/reservations/<screening_id>/<seat_id>', methods=['POST', 'GET'])
+def create_reservation(screening_id, seat_id):
     if request.method == "POST":
        user = userctlr.get_logged_in_user()
-       reservationctlr.create(user.id, show_id, seat_id)
+       reservationctlr.create(user.id, screening_id, seat_id)
        return redirect('/')
     
-    show = showctlr.get(show_id)
+    show = showctlr.get(screening_id)
     seat = seatctlr.get(seat_id)
     return render_template("create_reservation.html", show=show, seat=seat, user=userctlr.get_logged_in_user())
 

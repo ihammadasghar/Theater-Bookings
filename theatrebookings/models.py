@@ -33,12 +33,12 @@ class Show(db.Model):
     duration = db.Column(db.Integer)
     description = db.Column(db.String(150))
     img_link = db.Column(db.String(500))
+    screenings = db.relationship('Screening')
 
-    def __init__(self, name: str, date: datetime, genre: str, duration: int, description: str, img_link: str) -> None:
+    def __init__(self, name: str, genre: str, duration: int, description: str, img_link: str) -> None:
         self.name = name
         self.genre = genre
         self.duration = duration
-        self.date = date
         self.description = description
         self.img_link = img_link
 

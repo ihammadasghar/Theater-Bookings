@@ -4,25 +4,31 @@
 {% endblock %}
 
 {% block body %}
+{% if shows == []%}
+  <div class="alert alert-warning" role="alert">
+    No shows added yet :/
+  </div>
+{% endif%}
 
   <div class="row">
   {%for shw in shows%}
-    <div class="col">
-      <div class="card" style="width: 18rem;box-shadow:2px 3px #888888">
+    <div class="col-4">
+      <div class="card">
         <img src={{shw.img_link}} class="card-img-top" alt="...">
         <div class="card-body">
           <div class="row">
-            <h5 class="card-title">{{shw.name}}</h5>
-            <div class="col">
+            <div class="col-8">
+              <h5 class="card-title">{{shw.name}}</h5>
+            </div>
+            <div class="col-4">
               <div class="float-right">
-                  <span style="background-color: orange; height: 18px; color: black;"class="badge badge-genre">{{shw.genre}}</span>
-                  <span style="background-color: lightskyblue;height: 18px"class="badge badge-duration">{{shw.duration}}h</span>
-                  <!-- <span style="background-color: lightsteelblue"class="badge badge-time">{{shw.date}}</span> -->
+                <span class="badge badge-warning">{{shw.genre}}</span>
+                <span class="badge badge-primary">{{shw.duration}}h</span>
               </div>
             </div>
           </div>
-          <div align="center">
-            <a href="/shows/{{shw.id}}" style="width: 50%;" class="btn btn-primary">Details</a>
+          <div>
+            <a href="/shows/{{shw.id}}" class="btn btn-primary">View</a>
           </div>
         </div>
       </div>

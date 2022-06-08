@@ -60,12 +60,6 @@ def search(search_word):
     return Show.query.filter(Show.name.startswith(search_word)).all()
 
 
-def get_reserved_seats_ids(id):
-    show = get(id)
-    seat_ids = [res.seat_id for res in show.reservations]
-    return seat_ids
-
-
 #screenings
 def add_screening(show_id, datetime):
     screening = Screening(show_id, datetime)
@@ -74,8 +68,13 @@ def add_screening(show_id, datetime):
     return True
 
 
-def delete_screening(screening_id):
+def get_screening(screening_id):
     screening = Screening.query.get(screening_id)
+    return screening
+
+
+def delete_screening(screening_id):
+    screening = get_screening(screening_id)
     db.session.delete(screening)
     db.session.commit()
     return True
@@ -84,3 +83,9 @@ def delete_screening(screening_id):
 def get_screenings(show_id):
     show = get(show_id)
     return show.screenings
+
+
+def get_reserved_seats_ids(screening_id):
+    screening = get_screening(screening_id)
+    seat_ids = [res.seat_id for res in screening.reservations]
+    return seat_ids

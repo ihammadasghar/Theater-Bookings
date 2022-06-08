@@ -49,10 +49,10 @@ class Reservation(db.Model):
     screening_id = db.Column(db.Integer, db.ForeignKey('screening.id'))   # 1 reservation has 1 screening
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))   # i reservation has 1 user
 
-    def __init__(self, user_id: int, seat_id: int, show_id: int) -> None:
+    def __init__(self, user_id: int, seat_id: int, screening_id: int) -> None:
         self.user_id = user_id
         self.seat_id = seat_id
-        self.show_id = show_id
+        self.screening_id = screening_id
 
 
 class Screening(db.Model):

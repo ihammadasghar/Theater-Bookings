@@ -4,32 +4,26 @@
 {% endblock %}
 
 {% block body %}
-<h1>Show</h1>
-<ol>
-    <li>Show picture</li>
-    <li>Show details</li>
-    <li>Show seats</li>
-  </ol>
-  <div class="card" style="width: 95%;box-shadow: 2px 3px #888888;">
-    <div class="row">
-      <div class="col">
-        <div class="card-body">
-          <h5  style= "color: black;"class="card-title">{{show.name}}</h5>
-          <span style="background-color: orange; color: black;"class="badge badge-genre">{{show.genre}}</span>
-          <span style="background-color: lightskyblue"class="badge badge-duration">{{show.duration}}h</span>
-          <div class="description">
-            <p class="card-description" style="width: 95%;">{{show.description}}</p>
-          </div>
-            <a class="btn btn-success" href="/shows/screenigs/add/{{ show.id }}">Add screening</a>
-            <a class="btn btn-danger" href="/shows/delete/{{ show.id }}">Delete</a>
+<div class="card" style="width: 95%;box-shadow: 2px 3px #888888;">
+  <div class="row">
+    <div class="col">
+      <div class="card-body">
+        <h5  style= "color: black;"class="card-title">{{show.name}}</h5>
+        <span style="background-color: orange; color: black;"class="badge badge-genre">{{show.genre}}</span>
+        <span style="background-color: lightskyblue"class="badge badge-duration">{{show.duration}}h</span>
+        <div class="description">
+          <p class="card-description" style="width: 95%;">{{show.description}}</p>
         </div>
+          <a class="btn btn-success" href="/shows/screenigs/add/{{ show.id }}">Add screening</a>
+          <a class="btn btn-danger" href="/shows/delete/{{ show.id }}">Delete</a>
       </div>
-      <div class="col">
-        <img src={{show.img_link}} class="card-img-top" alt="..."  width="500" height="500">
-      </div>
-      </div>
-  </div>
-  <br>
+    </div>
+    <div class="col">
+      <img src={{show.img_link}} class="card-img-top" alt="..."  width="500" height="500">
+    </div>
+    </div>
+</div>
+<br>
 
 <!-- screenings -->
 <div class="row">

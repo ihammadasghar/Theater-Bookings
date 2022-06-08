@@ -10,8 +10,7 @@
     <p>
       <b>Show: </b>{{ show.name }}<br>
       <b>Seat: </b>{{ seat.position }}<br>
-      <b>Date: </b>{{ show.date }}<br>
-      <b>Time: </b>{{ show.time }}
+      <b>Date and time: </b>{{ screening.datetime }}<br>
     </p>
     <form action="/reservations/{{ show.id }}/{{ seat.id }}" method="post">
       <button type="submit" style="width: 100%;" class="btn btn-primary">Confirm reservation</button>

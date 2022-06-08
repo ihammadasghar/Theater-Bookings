@@ -11,8 +11,8 @@ from .. import db
 # Get list of all reservations: Reservation.query.all()
 # more examples of querying ways: https://flask-sqlalchemy.palletsprojects.com/en/2.x/queries/
 
-def create(user_id, show_id, seat_id):
-    reservation = Reservation(user_id, seat_id, show_id)
+def create(user_id, screening_id, seat_id):
+    reservation = Reservation(user_id, seat_id, screening_id)
     db.session.add(reservation)
     db.session.commit()
     return True
@@ -25,11 +25,11 @@ def delete(id):
     return True
 
 
-def update(id, user_id, seat_id, show_id):
+def update(id, user_id, seat_id, screening_id):
     reservation = Reservation.query.get(id)
     reservation.user_id = user_id
     reservation.seat_id = seat_id
-    reservation.show_id = show_id
+    reservation.screening_id = screening_id
     db.session.commit()
     return True
 

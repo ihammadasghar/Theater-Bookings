@@ -22,8 +22,17 @@ def home():
 def profile():
     user = userctlr.get_logged_in_user()
     reservations = reservationctlr.get_user_reservations(user.id)
-    reservations = [(res.id, showctlr.get(res.show_id), seatctlr.get(res.seat_id)) for res in reservations]
-    return render_template("reservations.html", reservations=reservations, user=user)
+
+    reservation_details = []
+    for res in reservations:
+        id = res.id
+        screening = showctlr.get_screening(res.screening_id)
+        show = showctlr.get(screening.id)
+        seat = seatctlr.get(res.seat_id)
+
+        reservation_details.append((id, screening, show, seat))
+
+    return render_template("reservations.html", reservation_details=reservation_details, user=user)
 
 
 @views.route('/login', methods=['POST', 'GET'])
@@ -60,14 +69,9 @@ def register():
 @views.route('/shows/<show_id>', methods=['POST', 'GET'])
 def show_details(show_id):
     show = showctlr.get(show_id)
-    seats = seatctlr.get_all()
-    if not seats:
-        seatctlr.generate_seats()
-        seats = seatctlr.get_all()
+    screenings = showctlr.get_screenings(show_id)
 
-    reserved_seats_ids = showctlr.get_reserved_seats_ids(show_id)  
-    seat_letters = ["K", "J", "I", "H", "G", "F","--", "E", "D", "C", "B","--", "A"]
-    return render_template("show_details.html", show=show, seat_letters=seat_letters, seats=seats, reserved_seats_ids=reserved_seats_ids, user=userctlr.get_logged_in_user())
+    return render_template("show_details.html", show=show, screenings=screenings, user=userctlr.get_logged_in_user())
 
 
 @views.route('/search', methods=['POST', 'GET'])
@@ -85,25 +89,55 @@ def add_show():
         name = str(request.form["name"])
         description = str(request.form["description"])
         genre = str(request.form["genre"])
-        date = datetime.strptime(str(request.form["date"]), '%Y-%m-%d')
         duration = int(request.form["duration"])
         img_link = str(request.form["img"])
-        time = datetime.strptime(request.form["time"], '%H:%M').time()
-        showctlr.create(name, date, genre, duration, description, time, img_link)
+        showctlr.create(name, genre, duration, description, img_link)
     
     return render_template("add_show.html", user=userctlr.get_logged_in_user())
 
 
-@views.route('/reservations/<show_id>/<seat_id>', methods=['POST', 'GET'])
-def create_reservation(show_id, seat_id):
+@views.route('/shows/screenigs/add/<show_id>', methods=['POST', 'GET'])
+def add_screening(show_id):
     if request.method == "POST":
-       user = userctlr.get_logged_in_user()
-       reservationctlr.create(user.id, show_id, seat_id)
-       return redirect('/')
+        date = str(request.form["date"])
+        time = str(request.form["time"])
+        dateandtime = date + " " + time
+        dateandtime = datetime.strptime(dateandtime, '%Y-%m-%d %H:%M')
+        showctlr.add_screening(show_id,dateandtime)
+        return redirect(f'/shows/{show_id}')
     
     show = showctlr.get(show_id)
+    return render_template("add_screening.html",show=show, user=userctlr.get_logged_in_user())
+    
+
+@views.route('/screenings/<screening_id>', methods=['POST', 'GET'])
+def screening_details(screening_id):
+    screening = showctlr.get_screening(screening_id)
+    show = showctlr.get(screening.show_id)
+    seats = seatctlr.get_all()
+    reserved_seat_ids = showctlr.get_reserved_seats_ids(screening_id)
+
+    #  In case the database was just created
+    if not seats:
+        seatctlr.generate_seats()
+        seats = seatctlr.get_all()
+    
+    seat_letters = ["K", "J", "I", "H", "G", "F","--", "E", "D", "C", "B","--", "A"]
+    return render_template("screening_details.html", show=show, seat_letters=seat_letters, seats=seats, screening=screening, reserved_seat_ids=reserved_seat_ids, user=userctlr.get_logged_in_user())
+
+
+
+@views.route('/reservations/<screening_id>/<seat_id>', methods=['POST', 'GET'])
+def create_reservation(screening_id, seat_id):
+    if request.method == "POST":
+       user = userctlr.get_logged_in_user()
+       reservationctlr.create(user.id, screening_id, seat_id)
+       return redirect('/')
+    
+    screening = showctlr.get_screening(screening_id)
+    show = showctlr.get(screening.show_id)
     seat = seatctlr.get(seat_id)
-    return render_template("create_reservation.html", show=show, seat=seat, user=userctlr.get_logged_in_user())
+    return render_template("create_reservation.html", screening=screening, show=show, seat=seat, user=userctlr.get_logged_in_user())
 
 
 @views.route('/reservations/delete/<reservation_id>/', methods=['GET'])

@@ -4,79 +4,46 @@
 {% endblock %}
 
 {% block body %}
-<h1>Show</h1>
-<ol>
-    <li>Show picture</li>
-    <li>Show details</li>
-    <li>Show seats</li>
-  </ol>
-  <div class="card" style="width: 95%;box-shadow: 2px 3px #888888;">
-    <div class="row">
-      <div class="col">
+<div class="card" style="width: 95%;box-shadow: 2px 3px #888888;">
+  <div class="row">
+    <div class="col">
+      <div class="card-body">
+        <h5  style= "color: black;"class="card-title">{{show.name}}</h5>
+        <span style="background-color: orange; color: black;"class="badge badge-genre">{{show.genre}}</span>
+        <span style="background-color: lightskyblue"class="badge badge-duration">{{show.duration}}h</span>
+        <div class="description">
+          <p class="card-description" style="width: 95%;">{{show.description}}</p>
+        </div>
+          <a class="btn btn-success" href="/shows/screenigs/add/{{ show.id }}">Add screening</a>
+          <a class="btn btn-danger" href="/shows/delete/{{ show.id }}">Delete</a>
+      </div>
+    </div>
+    <div class="col">
+      <img src={{show.img_link}} class="card-img-top" alt="..."  width="500" height="500">
+    </div>
+    </div>
+</div>
+<br>
+
+<!-- screenings -->
+<div class="row">
+  {%for screening in screenings%}
+    <div class="col-3">
+      <div class="card" style="width: 18rem;box-shadow:2px 3px #888888">
         <div class="card-body">
-          <h5  style= "color: black;"class="card-title">{{show.name}}</h5>
-          <span style="background-color: orange; color: black;"class="badge badge-genre">{{show.genre}}</span>
-          <span style="background-color: lightskyblue"class="badge badge-duration">{{show.duration}}h</span>
-          <span style="background-color: lightsteelblue"class="badge badge-time">{{show.date}}</span>
-          <div class="description">
-            <p class="card-description" style="width: 95%;">{{show.description}}</p>
+            <h5 class="card-title">{{screening.datetime}}</h5>
+            <span class="badge badge-success">{{show.name}}</span>
+            <span class="badge badge-warning">{{show.genre}}</span>
+            <span class="badge badge-primary">{{show.duration}}h</span>
+            <br/><br/>
+
+          <div align="center">
+            <a href="/screenings/{{screening.id}}" style="width: 50%;" class="btn btn-primary">View</a>
           </div>
         </div>
       </div>
-      <div class="col">
-        <img src={{show.img_link}} class="card-img-top" alt="..."  width="500" height="500">
-      </div>
-      </div>
+    </div>
+  {% endfor %}
   </div>
-  <br>
-  <table style="width: 90%;text-align: center;; height: 500px; border: 1px solid;border-color: white;">
-    
-    <!-- number of rows -->
-    {% for i in range(13)%}
-    <tr> 
-      {% if seat_letters[i] != "--" %}
-      <th style= "border: 1px solid;text-align: center;width: 3%; background-color: black; color: white; border-color: black;">
-        {{ seat_letters[i] }}
-      </th>
-      {% else %}
-      <th style="color:white">
-        {{  seat_letters[i]  }}
-      </th>
-      {% endif %}
 
-      <!--Number of collums-->
-        {%for j in range(1, 19)%}
-          {% if i in [6,11]%}
-            <th style="color:white">
-              --
-            </th>
-          {% elif i in [5,12] and j in [5,6,7,12,13,14]%}
-            <th style="color:white">
-              --
-            </th>
-          {% elif j in [3,4,15,16]%}
-            <th style="color:white">
-              --
-            </th>
-          {% elif seats[0].id in reserved_seats_ids %}
-
-            <th style = "border: 1px solid; width: 5%; background-color: red;border-color: white;">
-              <a style="text-decoration:none;color: black;">{{ seats.pop(0).position }} </a>
-            </th>
-
-          {% elif seats[0].vip %}
-           
-            <th style = "border: 1px solid; width: 5%; background-color: gold;border-color: white;">
-              <a href="/reservations/{{show.id}}/{{seats[0].id}}" style="text-decoration:none;color: black;">{{ seats.pop(0).position }} </a>
-            </th>
-           
-          {% else %}
-            <th style= "border: 1px solid; width:5%; border-color: white ;color: white; background-color: lightslategrey;">
-              <a href="/reservations/{{show.id}}/{{seats[0].id}}" style="text-decoration:none;color: white;">{{ seats.pop(0).position }}</a>
-            </th>
-          {% endif %}
-        {% endfor%}
-    </tr>
-    {% endfor %}
-</table>
 {% endblock %}

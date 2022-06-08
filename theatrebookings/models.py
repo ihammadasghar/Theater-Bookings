@@ -31,28 +31,36 @@ class Show(db.Model):
     name = db.Column(db.String(100))
     genre = db.Column(db.String(50))
     duration = db.Column(db.Integer)
-    date = db.Column(db.DateTime(timezone=True))
     description = db.Column(db.String(150))
     img_link = db.Column(db.String(500))
-    reservations = db.relationship('Reservation')  # 1 show has reservations
+    screenings = db.relationship('Screening')
 
-    def __init__(self, name: str, date: datetime, genre: str, duration: int, description: str, time: time, img_link: str) -> None:
+    def __init__(self, name: str, genre: str, duration: int, description: str, img_link: str) -> None:
         self.name = name
         self.genre = genre
         self.duration = duration
-        self.date = date
         self.description = description
-        self.time = time
         self.img_link = img_link
 
 
 class Reservation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     seat_id = db.Column(db.Integer, db.ForeignKey('seat.id'))   # 1 reservation has 1 seat
-    show_id = db.Column(db.Integer, db.ForeignKey('show.id'))   # 1 reservation has 1 show
+    screening_id = db.Column(db.Integer, db.ForeignKey('screening.id'))   # 1 reservation has 1 screening
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))   # i reservation has 1 user
 
-    def __init__(self, user_id: int, seat_id: int, show_id: int) -> None:
+    def __init__(self, user_id: int, seat_id: int, screening_id: int) -> None:
         self.user_id = user_id
         self.seat_id = seat_id
+        self.screening_id = screening_id
+
+
+class Screening(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    show_id = db.Column(db.Integer, db.ForeignKey('show.id'))   # 1 screening has 1 show
+    datetime = db.Column(db.DateTime(timezone=True))
+    reservations = db.relationship('Reservation')  # 1 screening has many reservations
+
+    def __init__(self, show_id, datetime) -> None:
         self.show_id = show_id
+        self.datetime = datetime

@@ -72,3 +72,15 @@ def add_screening(show_id, datetime):
     db.session.add(screening)
     db.session.commit()
     return True
+
+
+def delete_screening(screening_id):
+    screening = Screening.query.get(screening_id)
+    db.session.delete(screening)
+    db.session.commit()
+    return True
+
+
+def get_show_screenings(show_id):
+    show = get(show_id)
+    return show.screenings

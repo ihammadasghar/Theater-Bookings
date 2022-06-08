@@ -55,7 +55,7 @@ class Reservation(db.Model):
         self.show_id = show_id
 
 
-class Screening(db.model):
+class Screening(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     show_id = db.Column(db.Integer, db.ForeignKey('show.id'))   # 1 screening has 1 show
     datetime = db.Column(db.DateTime(timezone=True))

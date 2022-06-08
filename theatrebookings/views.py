@@ -61,13 +61,16 @@ def register():
 def show_details(show_id):
     show = showctlr.get(show_id)
     seats = seatctlr.get_all()
+    screenings = showctlr.get_screenings(show_id)
+
+    #  In case the database was just created
     if not seats:
         seatctlr.generate_seats()
         seats = seatctlr.get_all()
 
-    reserved_seats_ids = showctlr.get_reserved_seats_ids(show_id)  
+ 
     seat_letters = ["K", "J", "I", "H", "G", "F","--", "E", "D", "C", "B","--", "A"]
-    return render_template("show_details.html", show=show, seat_letters=seat_letters, seats=seats, reserved_seats_ids=reserved_seats_ids, user=userctlr.get_logged_in_user())
+    return render_template("show_details.html", show=show, seat_letters=seat_letters, seats=seats, screenings=screenings, user=userctlr.get_logged_in_user())
 
 
 @views.route('/search', methods=['POST', 'GET'])
@@ -90,6 +93,21 @@ def add_show():
         showctlr.create(name, genre, duration, description, img_link)
     
     return render_template("add_show.html", user=userctlr.get_logged_in_user())
+
+
+@views.route('/shows/screenigs/add/<show_id>', methods=['POST', 'GET'])
+def add_screening(show_id):
+    if request.method == "POST":
+        date = str(request.form["date"])
+        time = str(request.form["time"])
+        dateandtime = date + " " + time
+        dateandtime = datetime.strptime(dateandtime, '%Y-%m-%d %H:%M')
+        showctlr.add_screening(show_id,dateandtime)
+        return redirect(f'/shows/{show_id}')
+    
+    show = showctlr.get(show_id)
+    return render_template("add_screening.html",show=show, user=userctlr.get_logged_in_user())
+    
 
 
 @views.route('/reservations/<screening_id>/<seat_id>', methods=['POST', 'GET'])

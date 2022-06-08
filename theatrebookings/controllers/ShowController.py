@@ -81,6 +81,6 @@ def delete_screening(screening_id):
     return True
 
 
-def get_show_screenings(show_id):
+def get_screenings(show_id):
     show = get(show_id)
     return show.screenings

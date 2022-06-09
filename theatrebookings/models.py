@@ -1,6 +1,3 @@
-from sqlalchemy.sql import func
-import datetime
-import time
 from .settings import db
 
 class User(db.Model):

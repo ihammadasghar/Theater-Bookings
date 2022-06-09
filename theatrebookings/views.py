@@ -1,6 +1,4 @@
-from datetime import date, datetime
-import re
-from sqlite3 import Date
+from datetime import datetime
 from flask import Blueprint, redirect, render_template, request
 from .controllers import SeatController  as seatctlr
 from .controllers import ShowController as showctlr

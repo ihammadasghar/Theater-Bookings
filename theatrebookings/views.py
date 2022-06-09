@@ -165,7 +165,7 @@ def create_reservation(screening_id, seat_id):
     if request.method == "POST":
         # Create a new reservation using the ids the url and logged in user id
         reservationctlr.create(user.id, screening_id, seat_id)
-        return redirect('/')
+        return redirect('/reservations')
     
     # GET request
     # Get the screening, show and seat to render the confirmation page 

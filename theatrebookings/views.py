@@ -112,6 +112,12 @@ def add_show():
     return render_template("add_show.html", user=userctlr.get_logged_in_user())
 
 
+@views.route('/shows/delete/<show_id>', methods=['GET'])
+def delete_show(show_id):
+    showctlr.delete(show_id)
+    return redirect('/')
+
+
 ### SCREENING VIEWS ###
 @views.route('/shows/screenigs/add/<show_id>', methods=['POST', 'GET'])
 def add_screening(show_id):

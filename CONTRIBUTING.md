@@ -6,7 +6,7 @@
 ## Introduction:
 The Theatre-booking project uses mainly the following tecnologies:
 - Python
-- Html
+- Html/Bootstrap
 - Flask (python library to help design a webapp)
 - Flask SqlAlchemy (library to help manage the database)
 

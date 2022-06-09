@@ -6,19 +6,19 @@
 {% block body %}
 <div class="card" style="width: 95%;box-shadow: 2px 3px #888888;">
     <div class="row">
-      <div class="col">
+      <div class="col-6">
         <div class="card-body">
           <h5 class="card-title">Screening of {{show.name}}</h5>
           <span class="badge badge-success">{{screening.datetime}}</span>
           <span class="badge badge-warning">{{show.genre}}</span>
           <span class="badge badge-primary">{{show.duration}}h</span>
+          <p class="card-textp" style="width: 95%;">{{show.description}}</p>
         </div>
-        <p class="card-description" style="width: 95%;">{{show.description}}</p>
       </div>
-      <div class="col">
-        <img src={{show.img_link}} class="card-img-top" alt="..."  width="500" height="500">
+      <div class="col-6">
+        <img src={{show.img_link}} style="border-radius: 5px; width:90%; margin:15px;">
       </div>
-      </div>
+    </div>
 </div>
 
 <br>

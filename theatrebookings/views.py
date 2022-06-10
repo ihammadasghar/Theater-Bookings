@@ -175,8 +175,15 @@ def create_reservation(screening_id, seat_id):
     return render_template("create_reservation.html", screening=screening, show=show, seat=seat, user=user)
 
 
-@views.route('/reservations/delete/<reservation_id>/', methods=['GET'])
+@views.route('/reservations/delete/<reservation_id>', methods=['GET'])
 def delete_reservation(reservation_id):
+    # Delete the reservation with the id in the url
+    reservationctlr.delete(reservation_id)
+    return redirect('/reservations')
+
+
+@views.route('/reservations/edit/<reservation_id>', methods=['GET'])
+def edit_reservation(reservation_id):
     # Delete the reservation with the id in the url
     reservationctlr.delete(reservation_id)
     return redirect('/reservations')

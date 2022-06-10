@@ -34,7 +34,7 @@ def update(id, user_id, seat_id, screening_id):
     return True
 
 
-def get():
+def get(id):
     reservation = Reservation.query.get(id)
     return reservation
 

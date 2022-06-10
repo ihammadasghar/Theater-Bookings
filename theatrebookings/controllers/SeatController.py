@@ -22,3 +22,10 @@ def get_all():
 
 def get(id):
     return Seat.query.get(id)
+
+
+def get_by_num(pos):
+    seat = Seat.query.filter_by(position=pos).first()
+    if seat:
+        return seat
+    return None

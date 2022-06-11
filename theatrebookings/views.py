@@ -184,6 +184,7 @@ def delete_reservation(reservation_id):
 
 @views.route('/reservations/edit/<reservation_id>', methods=['POST', 'GET'])
 def edit_reservation(reservation_id):
+    #  Get all the information about the reservation from the database
     user = userctlr.get_logged_in_user()
     reservation = reservationctlr.get(reservation_id)
     old_seat = seatctlr.get(reservation.seat_id) 
@@ -191,31 +192,40 @@ def edit_reservation(reservation_id):
     show = showctlr.get(screening.show_id)
     reserved_seat_ids = showctlr.get_reserved_seats_ids(screening.id)
 
+    error_message = None
+
+    if request.method == "POST":
+        #  Get information about the new seat
+        seat_pos = request.form['seat_number'].upper()
+        new_seat = seatctlr.get_by_num(seat_pos)
+        
+        # Validations
+        #  Check if the new seat exits
+        if new_seat:
+            #  Check if its not already reserved
+            if new_seat.id not in reserved_seat_ids:
+                # Update the reservation
+                reservationctlr.update(reservation.id, user.id, new_seat.id, screening.id)
+                return redirect('/reservations')
+
+            error_message = f"{new_seat.position} is already reserved"
+
+        else:
+            error_message = f"No seat with number {seat_pos}"
+
+        # If the reservation is not updated because of the validations, the page will be rerendered with a error message
+
     # Letters required by the html table to make the hall seat layout
     seat_letters = ["K", "J", "I", "H", "G", "F","--", "E", "D", "C", "B","--", "A"]
     seats = seatctlr.get_all()
 
-    error_message = None
-
-    if request.method == "POST":
-        seat_pos = request.form['seat_number'].upper()
-        seat = seatctlr.get_by_num(seat_pos)
-        
-        if seat:
-            if seat.id not in reserved_seat_ids:
-                reservationctlr.update(reservation.id, user.id, seat.id, screening.id)
-                return redirect('/reservations')
-            error_message = f"{seat.position} is already reserved"
-        else:
-            error_message = f"No seat with number {seat_pos}"
-
     return render_template("edit_reservation.html", 
                             reservation=reservation, 
-                            seat_letters=seat_letters, 
-                            seats=seats, 
-                            reserved_seat_ids=reserved_seat_ids,
                             screening=screening,
                             show=show,
                             seat=old_seat,
+                            seat_letters=seat_letters, 
+                            seats=seats, 
+                            reserved_seat_ids=reserved_seat_ids,
                             error_message=error_message,
                             user=user)

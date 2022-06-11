@@ -4,6 +4,7 @@
 {% endblock %}
 
 {% block body %}
+<div class="d-flex justify-content-center">
 <div class="card" style="width: 95%;box-shadow: 2px 3px #888888;">
     <div class="row">
       <div class="col-6">
@@ -20,13 +21,19 @@
       </div>
     </div>
 </div>
+</div>
 
 <br>
-<p>Click on the available seats to reserve</p>
-<div class="d-flex justify-content-center">
-  <span class="badge rounded-pill bg-secondary" style="color: white;">Normal Seats</span>
-  <span class="badge rounded-pill bg-warning text-dark">VIP Seats</span>
+<p class="ml-5">Click on the available seats to reserve</p>
+
+<div class="d-flex justify-content-left">
+  <ul class="list-group ml-5">
+    <span class="badge rounded-pill" style="background-color: lightslategray; color: white;">Normal Seats</span>
+    <span class="badge rounded-pill" style="background-color: gold; color: black;">VIP Seats</span>
+    <span class="badge rounded-pill" style="background-color: red; color: black;">Reserved Seats</span>
+  </ul>
 </div>
+<div class="d-flex justify-content-center">
 <table style="width: 90%;text-align: center;; height: 500px; border: 1px solid;border-color: white;">
     
     <!-- number of rows -->
@@ -77,4 +84,5 @@
     </tr>
     {% endfor %}
 </table>
+</div>
 {% endblock %}

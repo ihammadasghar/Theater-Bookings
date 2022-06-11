@@ -1,6 +1,7 @@
 from ..models import Reservation
 from .. import db
 
+# NOTE: Using sqlaclhemy database: 
 # db functions syntax:
 # db.session.add(item) create item
 # db.session.delete(item) delete item
@@ -10,6 +11,9 @@ from .. import db
 # Find reservation with id: Reservation.query.get(id)
 # Get list of all reservations: Reservation.query.all()
 # more examples of querying ways: https://flask-sqlalchemy.palletsprojects.com/en/2.x/queries/
+
+
+### FUNCTIONS THAT INTERACT WITH OUR RESERVATION MODEL IN THE DATABASE ###
 
 def create(user_id, screening_id, seat_id):
     reservation = Reservation(user_id, seat_id, screening_id)
@@ -39,6 +43,7 @@ def get(id):
     return reservation
 
 
+#  Useful when loading the user reservations page
 def get_user_reservations(user_id):
     reservations = Reservation.query.filter_by(user_id=user_id)
     return reservations

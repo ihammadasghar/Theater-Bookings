@@ -11,6 +11,8 @@ from .. import db
 # Get list of all shows: Show.query.all()
 # more examples of querying ways: https://flask-sqlalchemy.palletsprojects.com/en/2.x/queries/
 
+### FUNCTIONS THAT INTERACT WITH OUR SHOWS AND SCREENING MODELS IN THE DATABASE ###
+
 def create(name, genre, duration, description, img):
     shw = Show(name, genre, duration, description, img)
     db.session.add(shw)

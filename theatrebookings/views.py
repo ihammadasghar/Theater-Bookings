@@ -197,7 +197,7 @@ def edit_reservation(reservation_id):
     if request.method == "POST":
         #  Get information about the new seat
         seat_pos = request.form['seat_number'].upper()
-        new_seat = seatctlr.get_by_num(seat_pos)
+        new_seat = seatctlr.get_by_position(seat_pos)
         
         # Validations
         #  Check if the new seat exits

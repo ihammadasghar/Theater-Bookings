@@ -1,5 +1,7 @@
 from .settings import db
 
+### MODEL DEFINITIONS AND RELATIONAL DATABASE STRUCTURE ###
+
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(150), unique=True)

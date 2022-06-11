@@ -4,6 +4,11 @@
 {% endblock %}
 
 {% block body %}
+{% if show.screenings == []%}
+  <div class="alert alert-warning" role="alert">
+    No screenigs assigned for the show :/
+  </div>
+{% endif%}
 <div class="card" style="width: 95%;box-shadow: 2px 3px #888888;">
   <div class="row">
       <div class="col-6">

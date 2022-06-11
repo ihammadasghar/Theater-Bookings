@@ -154,6 +154,9 @@ def screening_details(screening_id):
     return render_template("screening_details.html", show=show, seat_letters=seat_letters, seats=seats, screening=screening, reserved_seat_ids=reserved_seat_ids, user=userctlr.get_logged_in_user())
 
 
+# @views.route('/reservations/delete/<id>', methods=['POST', 'GET'])
+# def create_reservation(screening_id, seat_id):
+
 ### RESERVATION VIEWS ###
 @views.route('/reservations/<screening_id>/<seat_id>', methods=['POST', 'GET'])
 def create_reservation(screening_id, seat_id):

@@ -10,6 +10,11 @@
     <p>
       <b>Show: </b>{{ show.name }}<br>
       <b>Seat: </b>{{ seat.position }}<br>
+      {% if seat.vip%}
+      <b>Price: </b>12.00€<br>
+      {% else %}
+      <b>Price: </b>4.00€<br>
+      {% endif %}
       <b>Date and time: </b>{{ screening.datetime }}<br>
     </p>
     <form action="/reservations/{{ show.id }}/{{ seat.id }}" method="post">

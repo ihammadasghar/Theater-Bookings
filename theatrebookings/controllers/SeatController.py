@@ -1,6 +1,9 @@
 from ..settings import db
 from ..models import Seat
 
+### FUNCTIONS THAT INTERACT WITH OUR RESERVATION MODEL IN THE DATABASE ###
+
+#  Only used once when the app is launched for the first time
 def generate_seats():
     a = {"K": 14, "J": 14, "I": 14, "H": 14, "G": 14, "F": 8,"E": 14, "D": 14, "C": 14, "B": 14,"A": 8}
     for letter, num in a.items():
@@ -22,3 +25,10 @@ def get_all():
 
 def get(id):
     return Seat.query.get(id)
+
+
+def get_by_position(pos):
+    seat = Seat.query.filter_by(position=pos).first()
+    if seat:
+        return seat
+    return None

@@ -22,11 +22,7 @@
         <p>
           <b>Show: </b>{{ show.name }}<br>
           <b>Seat: </b>{{ seat.position }}<br>
-          {% if seat.vip%}
-          <b>Price: </b>12.00€<br>
-          {% else %}
-          <b>Price: </b>4.00€<br>
-          {% endif %}
+          <b>Price: </b>{{ seat.price }}0$<br>
           <b>Date and time: </b>{{ screening.datetime }}<br>
           <b>Name: </b>{{ user.name }}<br>
           <b>Email: </b>{{ user.email }}<br>
@@ -35,7 +31,7 @@
         <a class="btn btn-danger" href="/reservations/delete/{{ id }}">Cancel</a>
       </div>
   </div>
-  </div>
+</div>
 </div>
 {% endfor %}
 {% endblock %}

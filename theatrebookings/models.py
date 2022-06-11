@@ -1,5 +1,7 @@
 from .settings import db
 
+### MODEL DEFINITIONS AND RELATIONAL DATABASE STRUCTURE ###
+
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(150), unique=True)
@@ -16,6 +18,7 @@ class Seat(db.Model):
     position = db.Column(db.String(3))
     vip = db.Column(db.Boolean)
     reservations = db.relationship('Reservation')  # 1 seat has many reservations
+    price = db.Column(db.Float)
     
     def __init__(self, position: str, vip: bool, price: float) -> None:
         self.position = position

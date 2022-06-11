@@ -10,12 +10,8 @@
     <p>
       <b>Show: </b>{{ show.name }}<br>
       <b>Seat: </b>{{ seat.position }}<br>
-      {% if seat.vip%}
-      <b>Price: </b>12.00€<br>
-      {% else %}
-      <b>Price: </b>4.00€<br>
-      {% endif %}
       <b>Date and time: </b>{{ screening.datetime }}<br>
+      <b>Price: </b>{{ seat.price }}0$<br>
     </p>
     <form action="/reservations/{{ show.id }}/{{ seat.id }}" method="post">
       <button type="submit" style="width: 100%;" class="btn btn-primary">Confirm reservation</button>

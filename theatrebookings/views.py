@@ -11,7 +11,7 @@ views = Blueprint('views', __name__)
 @views.route('/', methods=['GET'])
 def home(): 
     #  Pass information about 10 shows to the home page
-    shows = showctlr.get_first(10)
+    shows = showctlr.get_first(9)
     return render_template("home.html", shows=shows, user=userctlr.get_logged_in_user())
 
 
@@ -57,7 +57,7 @@ def register():
 
 
 ### SHOW VIEWS ###
-@views.route('/shows/<show_id>', methods=['POST', 'GET'])
+@views.route('/shows/<show_id>', methods=['GET'])
 def show_details(show_id):
     #  Get the show throught the show id in the url and its screenings and pass it to the page
     show = showctlr.get(show_id)

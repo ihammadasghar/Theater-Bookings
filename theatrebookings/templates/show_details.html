@@ -6,10 +6,10 @@
 {% block body %}
 {% if show.screenings == []%}
   <div class="alert alert-warning" role="alert">
-    No screenigs assigned for the show :/
+    No screenings assigned for the show :/
   </div>
 {% endif%}
-<div class="card" style="width: 95%;box-shadow: 2px 3px #888888;">
+<div class="card" style="width: 95%;">
   <div class="row">
       <div class="col-6">
         <div class="card-body">
@@ -30,11 +30,11 @@
 <br>
 
 <!-- screenings -->
-<p >Show screenings:</p>
+<p >Available screenings for the show:</p>
 <div class="row">
   {%for screening in screenings%}
     <div class="col-4">
-      <div class="card" style="width: 18rem;box-shadow:2px 3px #888888">
+      <div class="card">
         <div class="card-body">
             <h5 class="card-title">{{screening.datetime}}</h5>
             <span class="badge badge-success">{{show.name}}</span>

@@ -33,7 +33,7 @@
           </ul>
           <ul class="navbar-nav ml-auto">
             <form class="form-inline my-2 my-lg-0" action="/search" method="POST">
-              <input class="form-control mr-sm-2" name="search_word"type="search" style="width: 400px;" placeholder="Search for a show" aria-label="Search">
+              <input class="form-control mr-sm-2" name="search_word"type="search" style="width: 400px;" placeholder="Search for a show" required>
               <button type="submit"class="btn btn-success my-2 my-sm-0" type="submit">Search</button>
             </form>
             {% if user!= None %}

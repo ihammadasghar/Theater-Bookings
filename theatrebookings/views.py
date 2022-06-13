@@ -1,4 +1,5 @@
 from datetime import datetime
+from email import message
 from flask import Blueprint, redirect, render_template, request
 from .controllers import SeatController  as seatctlr
 from .controllers import ShowController as showctlr
@@ -44,16 +45,23 @@ def logout():
 
 @views.route('/register', methods=['POST', 'GET'])
 def register():
+    message = None
+
     if request.method == "POST":
         # Get html form data and register the user
         name = request.form["name"]
         email = request.form["email"]
-        userctlr.create(name, email)
-        userctlr.login(name, email)
-        return redirect("/")
+        if userctlr.name_exists(name):
+            message = f"A user with the name '{name}' already exists"
+        elif userctlr.email_exists(email):
+            message = f"This email has already been registered"
+        else:
+            userctlr.create(name, email)
+            userctlr.login(name, email)
+            return redirect("/")
     
     # Render the register page on GET request
-    return render_template("register.html", user=userctlr.get_logged_in_user())
+    return render_template("register.html", message=message, user=userctlr.get_logged_in_user())
 
 
 @views.route('/admin/sales', methods=['POST', 'GET'])

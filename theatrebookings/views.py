@@ -67,13 +67,18 @@ def register():
 @views.route('/admin/sales', methods=['POST', 'GET'])
 def sales():
     user=userctlr.get_logged_in_user()
-    # if not user.name == "Admin":
-    #     return redirect("/")
+
+    #  Check if the user is logged in and the user is admin
+    if not user:
+        return redirect("/login")
+
+    if not user.name == "Admin":
+        return redirect("/login")
 
     day, month, year = 0,0,0
 
     if request.method == "POST":
-        # Get html form data and register the user
+        # Get html form data and for date
         day = int(request.form["day"])
         month = int(request.form["month"])
         year = int(request.form["year"])

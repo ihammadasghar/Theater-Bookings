@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% block head %}
+<title>Sales</title>
+{% endblock %}
+
+{% block body %}
+<div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Sales</h5>
+      <form action="/admin/sales" method="post">
+        <div class="row">
+            <div class="col-3">
+                <select class="form-select" style="width: 100%;" name="day">
+                    <option value="0">All days</option>
+                    {% for i in range(31) %}
+                    <option value="{{i+1}}">{{i+1}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-3">
+                <select class="form-select" style="width: 100%;" name="month">
+                    <option value="0">All months</option>
+                    <option value="1">1 - January</option>
+                    <option value="2">2 - Feb</option>
+                    <option value="3">3 - March</option>
+                    <option value="4">4 - April</option>
+                    <option value="5">5 - May</option>
+                    <option value="6">6 - June</option>
+                    <option value="7">7 - July</option>
+                    <option value="8">8 - August</option>
+                    <option value="9">9 - September</option>
+                    <option value="10">10 - October</option>
+                    <option value="11">11 - November</option>
+                    <option value="12">12 - December</option>
+                </select>
+            </div>
+          
+          <div class="col-3">
+            <select class="form-select" style="width: 100%;" name="year">
+                <option value="0">All years</option>
+                <option value="2022">2022</option>
+                <option value="2023">2023</option>
+            </select>
+          </div>
+          <div class="col-3">
+            <button type="submit" class="btn btn-primary" style="width: 100%;" >Get stats</button>
+          </div>
+        </div>
+        
+        <br>
+
+      </form>
+      
+      <div>
+        <p>Stats for date {{date}}</p>
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">-</th>
+                <th scope="col">Normal</th>
+                <th scope="col">Vip</th>
+                <th scope="col">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Sold</th>
+                <td>{{ data["normal_sold"] }}</td>
+                <td>{{ data["vip_sold"] }}</td>
+                <td>{{ data["normal_sold"]+data["vip_sold"] }}</td>
+              </tr>
+              <tr>
+                <th scope="row">Value</th>
+                <td>{{ data["normal_value"] }}</td>
+                <td>{{ data["vip_value"] }}</td>
+                <td>{{ data["normal_value"]+data["vip_value"] }}</td>
+              </tr>
+            </tbody>
+          </table>
+      </div>
+    </div>
+</div>
+
+{% endblock %}

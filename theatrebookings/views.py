@@ -91,6 +91,11 @@ def sales():
 ### SHOW VIEWS ###
 @views.route('/shows/<show_id>', methods=['GET'])
 def show_details(show_id):
+    user=userctlr.get_logged_in_user()
+    #  Check if the user is logged in 
+    if not user:
+        return redirect("/login")
+        
     #  Get the show throught the show id in the url and its screenings and pass it to the page
     show = showctlr.get(show_id)
     screenings = showctlr.get_screenings(show_id)

@@ -212,10 +212,19 @@ def reservations():
 @views.route('/reservations/<screening_id>/<seat_id>', methods=['POST', 'GET'])
 def create_reservation(screening_id, seat_id):
     #  Check if a user is logged in
-    
     user = userctlr.get_logged_in_user()
     if not user:
         return redirect('/login')
+
+    # In case of quick reserve
+    if seat_id == "quick":
+        # Find the first seat that is not reserved
+        reserved_seat_ids = showctlr.get_reserved_seats_ids(screening_id)
+        NUM_SEATS = 142
+        for i in range(1, NUM_SEATS):
+            if i not in reserved_seat_ids:
+                seat_id = i
+                return redirect(f'/reservations/{screening_id}/{seat_id}')
 
     if request.method == "POST":
         # Create a new reservation using the ids the url and logged in user id

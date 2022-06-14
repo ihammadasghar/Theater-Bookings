@@ -108,6 +108,14 @@ def search_results():
 
 @views.route('/shows/add', methods=['POST', 'GET'])
 def add_show():
+    user=userctlr.get_logged_in_user()
+    #  Check if the user is logged in and the user is admin
+    if not user:
+        return redirect("/login")
+
+    if not user.name == "Admin":
+        return redirect("/login")
+
     if request.method == "POST":
         #  Get the data from the html form and create a show
         name = request.form["name"]
@@ -119,7 +127,7 @@ def add_show():
         return redirect('/')
     
     # Render the add show page with the html form
-    return render_template("add_show.html", user=userctlr.get_logged_in_user())
+    return render_template("add_show.html", user=user)
 
 
 @views.route('/shows/delete/<show_id>', methods=['GET'])
@@ -131,6 +139,14 @@ def delete_show(show_id):
 ### SCREENING VIEWS ###
 @views.route('/screenings/add/<show_id>', methods=['POST', 'GET'])
 def add_screening(show_id):
+    user=userctlr.get_logged_in_user()
+    #  Check if the user is logged in and the user is admin
+    if not user:
+        return redirect("/login")
+
+    if not user.name == "Admin":
+        return redirect("/login")
+
     if request.method == "POST":
         #  Get the data from the html form and create a screening
         date = str(request.form["date"])
@@ -142,7 +158,7 @@ def add_screening(show_id):
     
     #  Get show of the show id in the url and render add screening form page 
     show = showctlr.get(show_id)
-    return render_template("add_screening.html", show=show, user=userctlr.get_logged_in_user())
+    return render_template("add_screening.html", show=show, user=user)
     
 
 @views.route('/screenings/<screening_id>', methods=['GET'])

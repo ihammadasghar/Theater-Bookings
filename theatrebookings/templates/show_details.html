@@ -41,7 +41,10 @@
             <span class="badge badge-warning">{{show.genre}}</span>
             <span class="badge badge-primary">{{show.duration}}h</span>
             <br/><br/>
-            <a href="/screenings/{{screening.id}}" class="btn btn-primary">View</a>
+            <a href="/screenings/{{screening.id}}" class="btn btn-primary">Reserve a seat</a>
+            {% if user.name == "Admin" %}
+              <a href="/screening/delete/{{screening.id}}" class="btn btn-danger">Delete</a>
+            {%endif%}
         </div>
       </div>
     </div>

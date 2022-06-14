@@ -106,10 +106,15 @@ def add_screening(show_id):
         dateandtime = datetime.strptime(dateandtime, '%Y-%m-%d %H:%M')
         showctlr.add_screening(show_id,dateandtime)
         return redirect(f'/shows/{show_id}')
-    
+        
     #  Get show of the show id in the url and render add screening form page 
     show = showctlr.get(show_id)
     return render_template("add_screening.html", show=show, user=userctlr.get_logged_in_user())
+    
+@views.route('/screening/delete/<screening_id>', methods=['GET'])
+def delete_screening(screening_id):
+    showctlr.delete_screening(screening_id)
+    return redirect('/')
     
 
 @views.route('/screenings/<screening_id>', methods=['GET'])
@@ -128,7 +133,7 @@ def screening_details(screening_id):
         seats = seatctlr.get_all()
     
     # Letters required by the html table to make the hall seat layout
-    seat_letters = ["K", "J", "I", "H", "G", "F","--", "E", "D", "C", "B","--", "A"]
+    seat_letters = ["K", "J", "I", "H", "G", "F","--", "E", "D", "C", "B","--", "A","--","--"]
 
     return render_template("screening_details.html", show=show, seat_letters=seat_letters, seats=seats, screening=screening, reserved_seat_ids=reserved_seat_ids, user=userctlr.get_logged_in_user())
 

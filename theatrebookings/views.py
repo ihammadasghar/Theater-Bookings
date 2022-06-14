@@ -133,7 +133,7 @@ def screening_details(screening_id):
         seats = seatctlr.get_all()
     
     # Letters required by the html table to make the hall seat layout
-    seat_letters = ["K", "J", "I", "H", "G", "F","--", "E", "D", "C", "B","--", "A","--","--"]
+    seat_letters = ["K", "J", "I", "H", "G", "F","--", "E", "D", "C", "B","--", "A"]
 
     return render_template("screening_details.html", show=show, seat_letters=seat_letters, seats=seats, screening=screening, reserved_seat_ids=reserved_seat_ids, user=userctlr.get_logged_in_user())
 

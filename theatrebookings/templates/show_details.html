@@ -4,11 +4,6 @@
 {% endblock %}
 
 {% block body %}
-{% if show.screenings == []%}
-  <div class="alert alert-warning" role="alert">
-    No screenings available for the show
-  </div>
-{% endif%}
 <div class="card" style="width: 95%;">
   <div class="row">
       <div class="col-6">
@@ -19,7 +14,7 @@
           <p class="card-textp" style="width: 95%;">{{show.description}}</p>
           
           {% if user.name == "Admin" %}
-          <a class="btn btn-success" href="/screenings/add/{{ show.id }}">Add screening</a>
+          <a class="btn btn-success" href="/screenings/add/{{ show.id }}">Add date</a>
           <a class="btn btn-danger" href="/shows/delete/{{ show.id }}">Delete</a>
           {% endif %}
 
@@ -32,28 +27,35 @@
 </div>
 
 <br>
-
-<!-- screenings -->
-<p >Available screenings for the show:</p>
-<div class="row">
-  {%for screening in screenings%}
-    <div class="col-4">
-      <div class="card">
-        <div class="card-body">
-            <h5 class="card-title">{{screening.datetime}}</h5>
-            <span class="badge badge-success">{{show.name}}</span>
-            <span class="badge badge-warning">{{show.genre}}</span>
-            <span class="badge badge-primary">{{show.duration}}h</span>
-            <br/><br/>
-            <a href="/screenings/{{screening.id}}" class="btn btn-primary">Reserve a seat</a>
-            <a href="/reservations/{{screening.id}}/quick" class="btn btn-primary">Quick reserve</a>
-            {% if user.name == "Admin" %}
-              <a href="/screening/delete/{{screening.id}}" class="btn btn-danger">Delete</a>
-            {%endif%}
-        </div>
-      </div>
-    </div>
-  {% endfor %}
+{% if screenings == []%}
+  <div class="alert alert-warning" role="alert">
+    No screenings available for the show
   </div>
+
+{% else %}
+<!-- screenings -->
+<table class="table">
+  <tr>
+    <th scope="col">Date</th>
+    <th scope="col">Time</th>
+    <th scope="col">Options</th>
+  </tr>
+  <tbody>
+    {%for screening in screenings%}
+    <tr>
+      <td>{{screening.datetime.date()}}</td>
+      <td>{{screening.datetime.time()}}</td>
+      <td>
+        <a href="/screenings/{{screening.id}}" class="btn btn-success">Reserve a seat</a>
+        <a href="/reservations/{{screening.id}}/quick" class="btn btn-warning">Quick reserve</a>
+        {% if user.name == "Admin" %}
+        <a href="/screening/delete/{{screening.id}}" class="btn btn-danger">Delete</a>
+        {%endif%}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endif%}
 
 {% endblock %}

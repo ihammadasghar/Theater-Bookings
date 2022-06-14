@@ -1,5 +1,4 @@
 from datetime import datetime
-from email import message
 from flask import Blueprint, redirect, render_template, request
 from .controllers import SeatController  as seatctlr
 from .controllers import ShowController as showctlr

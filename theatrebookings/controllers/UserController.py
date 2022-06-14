@@ -21,6 +21,20 @@ def create(name, email):
     return True
 
 
+def email_exists(email):
+    email = User.query.filter_by(email=email).first()
+    if email:
+        return True
+    return False
+
+
+def name_exists(name):
+    name = User.query.filter_by(name=name).first()
+    if name:
+        return True
+    return False
+
+
 def delete(id):
     user = User.query.get(id)
     db.session.delete(user)

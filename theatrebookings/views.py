@@ -1,4 +1,5 @@
 from datetime import datetime
+from email import message
 from flask import Blueprint, redirect, render_template, request
 from .controllers import SeatController  as seatctlr
 from .controllers import ShowController as showctlr
@@ -44,16 +45,48 @@ def logout():
 
 @views.route('/register', methods=['POST', 'GET'])
 def register():
+    message = None
+
     if request.method == "POST":
         # Get html form data and register the user
         name = request.form["name"]
         email = request.form["email"]
-        userctlr.create(name, email)
-        userctlr.login(name, email)
-        return redirect("/")
+        if userctlr.name_exists(name):
+            message = f"A user with the name '{name}' already exists"
+        elif userctlr.email_exists(email):
+            message = f"This email has already been registered"
+        else:
+            userctlr.create(name, email)
+            userctlr.login(name, email)
+            return redirect("/")
     
     # Render the register page on GET request
-    return render_template("register.html", user=userctlr.get_logged_in_user())
+    return render_template("register.html", message=message, user=userctlr.get_logged_in_user())
+
+
+@views.route('/admin/sales', methods=['POST', 'GET'])
+def sales():
+    user=userctlr.get_logged_in_user()
+
+    #  Check if the user is logged in and the user is admin
+    if not user:
+        return redirect("/login")
+
+    if not user.name == "Admin":
+        return redirect("/login")
+
+    day, month, year = 0,0,0
+
+    if request.method == "POST":
+        # Get html form data and for date
+        day = int(request.form["day"])
+        month = int(request.form["month"])
+        year = int(request.form["year"])
+
+    data = reservationctlr.filter(day, month, year)
+    
+    # Render the register page on GET request
+    return render_template("sales.html", data=data, date=f"{day}/{month}/{year}", user=user)
 
 
 ### SHOW VIEWS ###
@@ -75,6 +108,14 @@ def search_results():
 
 @views.route('/shows/add', methods=['POST', 'GET'])
 def add_show():
+    user=userctlr.get_logged_in_user()
+    #  Check if the user is logged in and the user is admin
+    if not user:
+        return redirect("/login")
+
+    if not user.name == "Admin":
+        return redirect("/login")
+
     if request.method == "POST":
         #  Get the data from the html form and create a show
         name = request.form["name"]
@@ -86,7 +127,7 @@ def add_show():
         return redirect('/')
     
     # Render the add show page with the html form
-    return render_template("add_show.html", user=userctlr.get_logged_in_user())
+    return render_template("add_show.html", user=user)
 
 
 @views.route('/shows/delete/<show_id>', methods=['GET'])
@@ -96,8 +137,16 @@ def delete_show(show_id):
 
 
 ### SCREENING VIEWS ###
-@views.route('/shows/screenigs/add/<show_id>', methods=['POST', 'GET'])
+@views.route('/screenings/add/<show_id>', methods=['POST', 'GET'])
 def add_screening(show_id):
+    user=userctlr.get_logged_in_user()
+    #  Check if the user is logged in and the user is admin
+    if not user:
+        return redirect("/login")
+
+    if not user.name == "Admin":
+        return redirect("/login")
+
     if request.method == "POST":
         #  Get the data from the html form and create a screening
         date = str(request.form["date"])
@@ -109,7 +158,7 @@ def add_screening(show_id):
     
     #  Get show of the show id in the url and render add screening form page 
     show = showctlr.get(show_id)
-    return render_template("add_screening.html", show=show, user=userctlr.get_logged_in_user())
+    return render_template("add_screening.html", show=show, user=user)
     
 
 @views.route('/screenings/<screening_id>', methods=['GET'])
@@ -148,7 +197,7 @@ def reservations():
     for res in reservations:
         id = res.id
         screening = showctlr.get_screening(res.screening_id)
-        show = showctlr.get(screening.id)
+        show = showctlr.get(screening.show_id)
         seat = seatctlr.get(res.seat_id)
         reservation_details.append((id, screening, show, seat))
 
@@ -158,6 +207,7 @@ def reservations():
 @views.route('/reservations/<screening_id>/<seat_id>', methods=['POST', 'GET'])
 def create_reservation(screening_id, seat_id):
     #  Check if a user is logged in
+    
     user = userctlr.get_logged_in_user()
     if not user:
         return redirect('/login')

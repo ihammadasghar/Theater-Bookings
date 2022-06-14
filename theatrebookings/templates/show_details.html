@@ -6,7 +6,7 @@
 {% block body %}
 {% if show.screenings == []%}
   <div class="alert alert-warning" role="alert">
-    No screenings assigned for the show :/
+    No screenings available for the show
   </div>
 {% endif%}
 <div class="card" style="width: 95%;">
@@ -17,8 +17,12 @@
           <span class="badge badge-warning">{{show.genre}}</span>
           <span class="badge badge-primary">{{show.duration}}h</span>
           <p class="card-textp" style="width: 95%;">{{show.description}}</p>
-          <a class="btn btn-success" href="/shows/screenigs/add/{{ show.id }}">Add screening</a>
+          
+          {% if user.name == "Admin" %}
+          <a class="btn btn-success" href="/screenings/add/{{ show.id }}">Add screening</a>
           <a class="btn btn-danger" href="/shows/delete/{{ show.id }}">Delete</a>
+          {% endif %}
+
         </div>
       </div>
       <div class="col-6">

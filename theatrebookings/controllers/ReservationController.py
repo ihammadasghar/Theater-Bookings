@@ -1,7 +1,5 @@
-from ..models import Reservation, Seat
+from ..models import Reservation, Seat, Screening
 from .. import db
-from datetime import date,datetime
-from ..controllers.ShowController import get_screening
 
 # NOTE: Using sqlaclhemy database: 
 # db functions syntax:
@@ -55,7 +53,7 @@ def filter(day, month, year):
     data = {"normal_sold":0, "normal_value":0, "vip_sold":0, "vip_value":0}
 
     for r in Reservation.query.all():
-        screening_date = get_screening(r.screening_id).datetime
+        screening_date = Screening.query.get(r.screening_id).datetime
 
         if check_date(screening_date, day, month, year):
             seat = Seat.query.get(r.seat_id)

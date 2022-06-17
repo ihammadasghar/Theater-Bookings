@@ -1,4 +1,5 @@
 from ..models import Show, Screening
+from .. controllers.ReservationController import delete as delete_reservation
 from .. import db
 
 # db functions syntax:
@@ -21,8 +22,13 @@ def create(name, genre, duration, description, img):
 
 
 def delete(id):
-    shw = Show.query.get(id)
-    db.session.delete(shw)
+    show = Show.query.get(id)
+
+    #  Delete all the screenings of the show
+    for s in show.screenings:
+        delete_screening(s.id)
+
+    db.session.delete(show)
     db.session.commit()
     return True
 
@@ -39,7 +45,7 @@ def update(id, name, genre, duration, description,img):
 
 
 def get(id):
-    # TODO: get show id as a parameter, find the show using query and return the show 
+    # get show id as a parameter, find the show using query and return the show 
     shw = Show.query.get(id)
     Show.query.get(id)
     return shw
@@ -51,14 +57,14 @@ def get_reservations(id):
 
 
 def get_first(num):
-    # TODO: get first "num" shows from the database and return them as a list
+    # get first "num" shows from the database and return them as a list
     shws = Show.query.order_by(Show.id).all()
     first_num = shws[:num]
     return first_num
 
 
 def search(search_word):
-    # TODO: search all the shows with names starting with "search"
+    # search all the shows with names starting with "search"
     return Show.query.filter(Show.name.startswith(search_word)).all()
 
 
@@ -77,6 +83,11 @@ def get_screening(screening_id):
 
 def delete_screening(screening_id):
     screening = get_screening(screening_id)
+
+    #  Delete all the reservations for the screening
+    for r in screening.reservations:
+        delete_reservation(r.id)
+        
     db.session.delete(screening)
     db.session.commit()
     return True

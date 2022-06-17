@@ -1,5 +1,6 @@
 from flask import redirect, render_template, request
 from ..controllers import ShowController as showctlr
+from ..controllers import SeatController as seatctlr
 from ..controllers import ReservationController as reservationctlr
 from ..controllers import UserController as userctlr
 from ..settings import views
@@ -83,3 +84,32 @@ def sales():
     
     # Render the register page on GET request
     return render_template("sales.html", data=data, date=f"{day}/{month}/{year}", user=user)
+
+
+@views.route('/admin/database', methods=['GET'])
+def database():
+    user=userctlr.get_logged_in_user()
+
+    #  Check if the user is logged in and the user is admin
+    if not user:
+        return redirect("/login")
+
+    if not user.name == "Admin":
+        return redirect("/login")
+
+    #  get all the data from the database
+    users = userctlr.get_all()
+    shows = showctlr.get_all()
+    screenings = showctlr.get_all_screenings()
+    screenings = [(s, showctlr.get(s.show_id)) for s in screenings]
+    res = reservationctlr.get_all()
+    reservations = []
+    for r in res:
+        pos = seatctlr.get(r.seat_id).position
+        screening = showctlr.get_screening(r.screening_id)
+        show_name = showctlr.get(screening.show_id).name
+        user_name = userctlr.get(r.user_id).name
+        reservations.append((r.id, pos, screening, show_name, user_name))
+    
+    # Render the register page on GET request
+    return render_template("database.html", users=users, shows=shows, screenings=screenings, reservations=reservations, user=user)

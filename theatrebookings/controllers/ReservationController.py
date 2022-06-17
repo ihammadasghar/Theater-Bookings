@@ -43,6 +43,10 @@ def get(id):
     return reservation
 
 
+def get_all():
+    return Reservation.query.all()
+
+
 #  Useful when loading the user reservations page
 def get_user_reservations(user_id):
     reservations = Reservation.query.filter_by(user_id=user_id)

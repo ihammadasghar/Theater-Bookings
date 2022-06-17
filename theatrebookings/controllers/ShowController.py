@@ -51,6 +51,10 @@ def get(id):
     return shw
 
 
+def get_all():
+    return Show.query.all()
+
+
 def get_reservations(id):
     shw = Show.query.get(id)
     return shw.reservations
@@ -81,13 +85,17 @@ def get_screening(screening_id):
     return screening
 
 
+def get_all_screenings():
+    return Screening.query.all()
+
+
 def delete_screening(screening_id):
     screening = get_screening(screening_id)
 
     #  Delete all the reservations for the screening
     for r in screening.reservations:
         delete_reservation(r.id)
-        
+
     db.session.delete(screening)
     db.session.commit()
     return True

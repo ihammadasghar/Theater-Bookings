@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% block head %}
+<title>Sales</title>
+{% endblock %}
+
+{% block body %}
+
+<div class="row">
+<div class="col-6">
+<h5 >Users</h5>
+<table class="table">
+    <thead>
+        <tr>
+        <th scope="col">id</th>
+        <th scope="col">Name</th>
+        <th scope="col">Email</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for u in users %}
+        <tr>
+        <td>{{ u.id }}</td>
+        <td>{{ u.name }}</td>
+        <td>{{ u.email }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+</div>
+
+<div class="col-6">
+<h5 class="card-title">Shows</h5>
+<table class="table">
+    <thead>
+        <tr>
+        <th scope="col">id</th>
+        <th scope="col">Name</th>
+        <th scope="col">img</th>
+        <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for s in shows %}
+        <tr>
+        <td><a href="/shows/{{ s.id }}">{{ s.id }}</a></td>
+        <td>{{ s.name }}</td>
+        <td><img src="{{ s.img_link }}" width="50" height="50"/></td>
+        <td><a href="/shows/{{s.id}}">See screenings</a></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+</div>
+
+<div class="col-6">
+    <h5 class="card-title">Screenings</h5>
+    <table class="table">
+        <thead>
+            <tr>
+            <th scope="col">id</th>
+            <th scope="col">Date</th>
+            <th scope="col">Time</th>
+            <th scope="col">Show</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for s, sh in screenings %}
+            <tr>
+            <td><a href="/screenings/{{ s.id }}">{{ s.id }}</a></td>
+            <td>{{ s.datetime.date() }}</td>
+            <td>{{ s.datetime.time() }}</td>
+            <td><a href="/shows/{{s.show_id}}">{{sh.name }}</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        </table>
+    </div>
+
+<div class="col-6">
+<h5 class="card-title">Reservations</h5>
+<table class="table">
+    <thead>
+        <tr>
+        <th scope="col">id</th>
+        <th scope="col">Date</th>
+        <th scope="col">Show</th>
+        <th scope="col">Seat</th>
+        <th scope="col">User</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for id, pos, screening, show_name, user_name in reservations %}
+        <tr>
+        <td>{{ id }}</td>
+        <td><a href="/screenings/{{ screening.id }}">{{ screening.datetime.date() }}</a></td>
+        <td><a href="/shows/{{ screening.show_id }}">{{ show_name }}</a></td>
+        <td>{{ pos }}</td>
+        <td>{{ user_name }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+</div>
+</div>
+
+
+{% endblock %}

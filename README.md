@@ -1,7 +1,9 @@
 # Theater-Bookings
-Group project for theatre reservations
+A Flask based webapp for theatre ticket sales and reservations management system.
 
-## Setting up:
+User manual: https://github.com/ihammadasghar/Theatre-Bookings/blob/main/Manual%20de%20utilizador.pdf
+
+## Quick setup:
 1. Clone the Repository
 ```
 git clone https://github.com/ihammadasghar/Theatre-Bookings.git
@@ -15,3 +17,14 @@ cd Theatre-Bookings
 ```
 pip install -r requirements.txt
 ```
+
+4. Run the server:
+```
+python app.py
+```
+
+5. Navigate to http://127.0.0.1:5000/ on your browser.
+
+## Admin Credentails:
+Username: Admin
+Email: admin@gmail.com

@@ -1,4 +1,4 @@
-# Theater-Bookings
+# Theatre-Bookings
 A Flask based webapp for theatre ticket sales and reservations management system.
 
 User manual: https://github.com/ihammadasghar/Theatre-Bookings/blob/main/Manual%20de%20utilizador.pdf

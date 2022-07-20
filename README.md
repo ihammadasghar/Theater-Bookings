@@ -1,18 +1,17 @@
 # Theater-Bookings
-Group project for theater reservations
+Group project for theatre reservations
 
 ## Setting up:
 1. Clone the Repository
 ```
-git clone https://github.com/ihammadasghar/Theater-Bookings.git
+git clone https://github.com/ihammadasghar/Theatre-Bookings.git
 ```
-2. cd to Theater-Bookings
+2. cd to Theatre-Bookings
 ```
-cd Theater-Bookings
+cd Theatre-Bookings
 ``` 
 
 3. Download all the dependencies:
 ```
 pip install -r requirements.txt
-pip install flask_sqlalchemy
 ```
